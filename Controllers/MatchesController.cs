@@ -17,16 +17,20 @@ namespace Witter.Controllers
     public class MatchesController : ControllerBase
     {
         private readonly IMatchRepository matchRepository;
+        private readonly IUserRepository userRepository;
         private readonly ITeamRepository teamRepository;
         private readonly DataContext dataContext;
         private readonly IMapper mapper;
+        private readonly IBetRepository betRepository;
 
-        public MatchesController(IMatchRepository matchRepository, ITeamRepository teamRepository, DataContext dataContext, IMapper mapper)
+        public MatchesController(IMatchRepository matchRepository, IUserRepository userRepository, ITeamRepository teamRepository, DataContext dataContext, IMapper mapper, IBetRepository betRepository)
         {
             this.matchRepository = matchRepository;
+            this.userRepository = userRepository;
             this.teamRepository = teamRepository;
             this.dataContext = dataContext;
             this.mapper = mapper;
+            this.betRepository = betRepository;
         }
 
         [HttpGet]
@@ -153,7 +157,35 @@ namespace Witter.Controllers
                 TeamBGoals = score.TeamBGoals
             };
 
+
+            var result = 0;
+            if(score.TeamAGoals > score.TeamBGoals)
+            {
+                result = 1;
+            }
+            else if(score.TeamAGoals < score.TeamBGoals)
+            {
+                result = 2;
+            }
+
             match.Score = scoreToUpdate;
+
+            var bets = betRepository.GetBetsByMatch(id);
+
+            foreach(var bet in bets)
+            {
+                var user = await userRepository.GetUser(bet.UserId);
+
+                if (bet.Prediction == result)
+                {
+                    user.Score += bet.Odds;
+                }
+                else
+                {
+                    user.Score -= 1;
+                }
+            }
+
 
             if(await dataContext.Commit())
             {
