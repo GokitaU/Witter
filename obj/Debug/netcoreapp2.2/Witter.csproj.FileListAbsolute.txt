@@ -1,0 +1,14 @@
+C:\Dev\Witter\Witter\Witter\bin\Debug\netcoreapp2.2\Witter.deps.json
+C:\Dev\Witter\Witter\Witter\bin\Debug\netcoreapp2.2\Witter.runtimeconfig.json
+C:\Dev\Witter\Witter\Witter\bin\Debug\netcoreapp2.2\Witter.runtimeconfig.dev.json
+C:\Dev\Witter\Witter\Witter\bin\Debug\netcoreapp2.2\Witter.dll
+C:\Dev\Witter\Witter\Witter\obj\Debug\netcoreapp2.2\Witter.csprojAssemblyReference.cache
+C:\Dev\Witter\Witter\Witter\obj\Debug\netcoreapp2.2\Witter.csproj.CoreCompileInputs.cache
+C:\Dev\Witter\Witter\Witter\obj\Debug\netcoreapp2.2\Witter.RazorAssemblyInfo.cache
+C:\Dev\Witter\Witter\Witter\obj\Debug\netcoreapp2.2\Witter.RazorAssemblyInfo.cs
+C:\Dev\Witter\Witter\Witter\obj\Debug\netcoreapp2.2\Witter.AssemblyInfoInputs.cache
+C:\Dev\Witter\Witter\Witter\obj\Debug\netcoreapp2.2\Witter.AssemblyInfo.cs
+C:\Dev\Witter\Witter\Witter\obj\Debug\netcoreapp2.2\Witter.RazorTargetAssemblyInfo.cache
+C:\Dev\Witter\Witter\Witter\bin\Debug\netcoreapp2.2\Witter.pdb
+C:\Dev\Witter\Witter\Witter\obj\Debug\netcoreapp2.2\Witter.dll
+C:\Dev\Witter\Witter\Witter\obj\Debug\netcoreapp2.2\Witter.pdb
