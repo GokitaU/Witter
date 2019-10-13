@@ -33,6 +33,18 @@ namespace Witter.Data
             return user;
         }
 
+        public async Task<User> ChangePassword(User user, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+
+            GeneratePasswordHash(password, out passwordHash, out passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            return user;
+        }
+
         public async Task<User> Register(User user, string password)
         {
             byte[] passwordHash, passwordSalt;

@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -23,12 +24,16 @@ namespace Witter.Controllers
         private readonly IAuthRepository authRepository;
         private readonly IConfiguration configuration;
         private readonly IMapper mapper;
+        private readonly IUserRepository userRepository;
+        private readonly DataContext dataContext;
 
-        public AuthController(IAuthRepository authRepository, IConfiguration configuration, IMapper mapper)
+        public AuthController(IAuthRepository authRepository, IConfiguration configuration, IMapper mapper, IUserRepository userRepository, DataContext dataContext)
         {
             this.authRepository = authRepository;
             this.configuration = configuration;
             this.mapper = mapper;
+            this.userRepository = userRepository;
+            this.dataContext = dataContext;
         }
 
         [HttpPost("register")]
@@ -95,6 +100,30 @@ namespace Witter.Controllers
                 token = tokenHandler.WriteToken(token),
                 userToReturn
             });
+        }
+
+        [Authorize(Roles="User, Admin")]
+        [HttpPut("password/{userId}")]
+        public async Task<IActionResult> ChangePassword(int userId, UserForEditDto userForEditDto)
+        {
+            int loggedUserId;
+            Int32.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out loggedUserId);
+
+            if(userId != loggedUserId)
+            {
+                return BadRequest("You cannot modify another user's profile.");
+            }
+
+            var user = await userRepository.GetUser(userId);
+
+            user = await authRepository.ChangePassword(user, userForEditDto.Password);
+
+            if(await dataContext.Commit())
+            {
+                return NoContent();
+            }
+
+            throw new Exception($"Changing password failed on save.");
         }
     }
 }

@@ -33,7 +33,10 @@ namespace Witter.Data
 
         public IEnumerable<Bet> GetBetsByUser(int userId)
         {
-            return dataContext.Bets.Where(b => b.UserId == userId);
+            if(upcoming && ended)
+            {
+                return dataContext.Bets.Where(b => b.UserId == userId);
+            }
         }
 
         public async void Place(Bet bet)
