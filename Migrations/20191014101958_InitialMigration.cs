@@ -88,6 +88,27 @@ namespace Witter.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Leagues",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    Prize = table.Column<string>(nullable: true),
+                    AdminId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Leagues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Leagues_Users_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Scores",
                 columns: table => new
                 {
@@ -106,6 +127,35 @@ namespace Witter.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UsersInLeagues",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false),
+                    LeagueId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsersInLeagues", x => new { x.UserId, x.LeagueId });
+                    table.ForeignKey(
+                        name: "FK_UsersInLeagues_Leagues_LeagueId",
+                        column: x => x.LeagueId,
+                        principalTable: "Leagues",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UsersInLeagues_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Leagues_AdminId",
+                table: "Leagues",
+                column: "AdminId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Matches_TeamAId",
                 table: "Matches",
@@ -115,6 +165,11 @@ namespace Witter.Migrations
                 name: "IX_Matches_TeamBId",
                 table: "Matches",
                 column: "TeamBId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersInLeagues_LeagueId",
+                table: "UsersInLeagues",
+                column: "LeagueId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -126,13 +181,19 @@ namespace Witter.Migrations
                 name: "Scores");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "UsersInLeagues");
 
             migrationBuilder.DropTable(
                 name: "Matches");
 
             migrationBuilder.DropTable(
+                name: "Leagues");
+
+            migrationBuilder.DropTable(
                 name: "Teams");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

@@ -15,6 +15,6 @@ namespace Witter.Models
         public bool IsAdmin { get; set; } = false;
         public bool PermanentBan { get; set; } = false;
         public DateTime? Ban { get; set; } = null;
-
+        public ICollection<UserInLeague> Leagues  { get; set; }
     }
 }

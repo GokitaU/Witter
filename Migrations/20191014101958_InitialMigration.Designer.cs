@@ -9,7 +9,7 @@ using Witter.Data;
 namespace Witter.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191012092907_InitialMigration")]
+    [Migration("20191014101958_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,24 @@ namespace Witter.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Bets");
+                });
+
+            modelBuilder.Entity("Witter.Models.League", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AdminId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Prize");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.ToTable("Leagues");
                 });
 
             modelBuilder.Entity("Witter.Models.Match", b =>
@@ -115,6 +133,26 @@ namespace Witter.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Witter.Models.UserInLeague", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("LeagueId");
+
+                    b.HasKey("UserId", "LeagueId");
+
+                    b.HasIndex("LeagueId");
+
+                    b.ToTable("UsersInLeagues");
+                });
+
+            modelBuilder.Entity("Witter.Models.League", b =>
+                {
+                    b.HasOne("Witter.Models.User", "Admin")
+                        .WithMany()
+                        .HasForeignKey("AdminId");
+                });
+
             modelBuilder.Entity("Witter.Models.Match", b =>
                 {
                     b.HasOne("Witter.Models.Team", "TeamA")
@@ -132,6 +170,19 @@ namespace Witter.Migrations
                         .WithOne("Score")
                         .HasForeignKey("Witter.Models.Score", "MatchId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Witter.Models.UserInLeague", b =>
+                {
+                    b.HasOne("Witter.Models.League", "League")
+                        .WithMany("Users")
+                        .HasForeignKey("LeagueId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Witter.Models.User", "User")
+                        .WithMany("Leagues")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

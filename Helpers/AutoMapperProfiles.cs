@@ -16,6 +16,7 @@ namespace Witter.Helpers
             CreateMap<User, UserForReturnDto>();
             CreateMap<MatchForCreateDto, Match>();
             CreateMap<User, UserForAdminDto>();
+            CreateMap<LeagueForCreateDto, League>();
         }
     }
 }

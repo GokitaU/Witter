@@ -41,6 +41,7 @@ namespace Witter
             services.AddScoped<IMatchRepository, MatchRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IBetRepository, BetRepository>();
+            services.AddScoped<ILeagueRepository, LeagueRepository>();
             services.AddAutoMapper(typeof(AuthRepository).Assembly);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
