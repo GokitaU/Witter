@@ -3,7 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Witter-SPA\src\app\_services\error.interceptor.ts" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
@@ -15,6 +20,10 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="Witter-SPA\src\app\_services\error.interceptor.ts" />
   </ItemGroup>
 
 </Project>
