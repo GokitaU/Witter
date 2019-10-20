@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../_models/user';
 import { AlertifyService } from '../_services/alertify.service';
 import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,12 +14,11 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   user: User;
 
-  constructor(private fb: FormBuilder, private alertify: AlertifyService, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private alertify: AlertifyService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     if (this.authService.loggedIn()) {
-      //send user to the main page
-      this.alertify.error("You are already signed in!");
+      this.router.navigate(['/matches']);
     }
 
     this.buildRegisterForm();
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
         this.alertify.error(error);
       }, () => {
         this.authService.login(this.user).subscribe(() => {
-          //send user to the main page
+          this.router.navigate(['/matches']);
         })
       })
     }

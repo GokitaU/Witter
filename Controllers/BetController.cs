@@ -31,7 +31,7 @@ namespace Witter.Controllers
 
         [Authorize(Roles = "Admin,User")]
         [HttpPost("place")]
-        public async Task<IActionResult> PlaceBet([FromForm]BetForPlaceDto betForPlace)
+        public async Task<IActionResult> PlaceBet(BetForPlaceDto betForPlace)
         {
             int userId;
             Int32.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out userId);

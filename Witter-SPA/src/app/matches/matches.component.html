@@ -1,0 +1,33 @@
+<h1 class="text-center mb-2">Upcoming Matches</h1>
+<h6 *ngIf="!loggedIn()" class="text-center mb-2">You have to sign in to place bets!</h6>
+<h6 *ngIf="isBanned()" class="text-center mb-2">You cannot be banned to place bets!</h6>
+<hr />
+
+<div class="container mt-4 text-center">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Home Team</th>
+        <th scope="col">Away Team</th>
+        <th scope="col">1</th>
+        <th scope="col">0</th>
+        <th scope="col">2</th>
+        <th scope="col" *ngIf="loggedIn() && !isBanned()">Bet!</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let match of matches">
+        <td class="align-middle">{{match.date | date:'yyyy-MM-dd HH:mm'}}</td>
+        <td class="align-middle">{{match.teamA.name}}</td>
+        <td class="align-middle">{{match.teamB.name}}</td>
+        <td class="align-middle">{{match.teamAOdds}}</td>
+        <td class="align-middle">{{match.drawOdds}}</td>
+        <td class="align-middle">{{match.teamBOdds}}</td>
+        <td *ngIf="loggedIn() && !isBanned()">
+          <app-bet-form [match]="match"></app-bet-form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -98,6 +98,7 @@ namespace Witter.Controllers
 
             return Ok(new {
                 token = tokenHandler.WriteToken(token),
+                siteRole = role,
                 userToReturn
             });
         }

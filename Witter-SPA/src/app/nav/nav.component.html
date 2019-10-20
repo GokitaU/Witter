@@ -2,8 +2,8 @@
   <div class="container">
     <a class="navbar-brand" href="#">Witter</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/matches']">Matches</a>
       </li>
     </ul>
 
@@ -23,6 +23,7 @@
       <input class="form-control mr-sm-2" type="text" placeholder="Username" name="username" required [(ngModel)]="model.username">
       <input class="form-control mr-sm-2" type="password" placeholder="Password" name="password" required [(ngModel)]="model.password">
       <button class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+      <a class="btn btn-info text-white my-2 ml-1 my-sm-0" [routerLink]="['/register']">Sign Up</a>
     </form>
   </div>
 </nav>
