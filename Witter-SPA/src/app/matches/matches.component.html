@@ -4,16 +4,16 @@
 <hr />
 
 <div class="container mt-4 text-center">
-  <table class="table">
+  <table class="table matches">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">Date</th>
-        <th scope="col">Home Team</th>
-        <th scope="col">Away Team</th>
-        <th scope="col">1</th>
-        <th scope="col">0</th>
-        <th scope="col">2</th>
-        <th scope="col" *ngIf="loggedIn() && !isBanned()">Bet!</th>
+        <th scope="col" class="align-middle">Date</th>
+        <th scope="col" class="align-middle">Home Team</th>
+        <th scope="col" class="align-middle">Away Team</th>
+        <th scope="col" class="align-middle">1</th>
+        <th scope="col" class="align-middle">0</th>
+        <th scope="col" class="align-middle">2</th>
+        <th scope="col" class="align-middle" *ngIf="loggedIn() && !isBanned()">Bet!</th>
       </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
         <td class="align-middle">{{match.teamAOdds}}</td>
         <td class="align-middle">{{match.drawOdds}}</td>
         <td class="align-middle">{{match.teamBOdds}}</td>
-        <td *ngIf="loggedIn() && !isBanned()">
+        <td class="align-middle" *ngIf="loggedIn() && !isBanned()">
           <app-bet-form [match]="match"></app-bet-form>
         </td>
       </tr>

@@ -12,3 +12,11 @@
 a:hover {
   cursor: pointer;
 }
+
+tr {
+  height: 100px;
+}
+
+.matches {
+  font-size: 18px;
+}
