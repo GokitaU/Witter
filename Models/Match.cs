@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Witter.Models
 {
@@ -11,6 +12,7 @@ namespace Witter.Models
         public float TeamAOdds { get; set; }
         public float TeamBOdds { get; set; }
         public float DrawOdds { get; set; }
-        public Score Score { get; set; } = null; 
+        public Score Score { get; set; } = null;
+        public ICollection<Bet> Bets { get; set; }
     }
 }

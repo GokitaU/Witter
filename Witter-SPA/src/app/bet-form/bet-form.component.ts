@@ -14,12 +14,14 @@ import { Router } from '@angular/router';
 export class BetFormComponent implements OnInit {
   betForm: FormGroup;
   bet: Bet;
+  prediction: number;
   @Input() match: Match;
 
   constructor(private fb: FormBuilder, private betService: BetService, private alertify: AlertifyService, private router: Router) { }
 
   ngOnInit() {
     this.generateBetForm();
+    this.getPrediction();
   }
 
   generateBetForm() {
@@ -27,6 +29,20 @@ export class BetFormComponent implements OnInit {
       prediction: ['1'],
       matchId: [this.match.id]
     });
+  }
+
+  getPrediction() {
+    this.betService.getBet(this.match.id).subscribe((bet: Bet) => {
+      console.log(bet);
+      this.prediction = bet.prediction;
+    });
+  }
+
+  placedBet() {
+    if (this.prediction == undefined) {
+      return false;
+    }
+    return true;
   }
 
   placeBet() {
@@ -38,7 +54,7 @@ export class BetFormComponent implements OnInit {
       }, error => {
         this.alertify.error(error);
         }, () => {
-          this.router.navigate(['/matches']);
+          this.getPrediction();
         });
     }
   }

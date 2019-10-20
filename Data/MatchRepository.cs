@@ -10,12 +10,10 @@ namespace Witter.Data
     public class MatchRepository : IMatchRepository
     {
         private readonly DataContext dataContext;
-        private readonly IBetRepository betRepository;
 
-        public MatchRepository(DataContext dataContext, IBetRepository betRepository)
+        public MatchRepository(DataContext dataContext)
         {
             this.dataContext = dataContext;
-            this.betRepository = betRepository;
         }
 
         public async void Add(Match match)

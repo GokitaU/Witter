@@ -1,3 +1,5 @@
+import { Match } from './match';
+
 export interface Bet {
   id: number,
   matchId: number,

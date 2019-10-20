@@ -105,6 +105,17 @@ namespace Witter.Controllers
             return Ok(bets);
         }
 
+        [HttpGet("user/match/{matchId}")]
+        public async Task<IActionResult> GetBetsByUserAndMatch(int matchId)
+        {
+            int userId;
+            Int32.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out userId);
+
+            var bet = await betRepository.GetBetsByUserAndMatch(userId, matchId);
+
+            return Ok(bet);
+        }
+
         [HttpGet("match/{matchId}")]
         public async Task<IActionResult> GetBetsByMatch(int matchId)
         {

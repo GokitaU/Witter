@@ -36,6 +36,11 @@ namespace Witter.Data
             return dataContext.Bets.Where(b => b.UserId == userId);
         }
 
+        public async Task<Bet> GetBetsByUserAndMatch(int userId, int matchId)
+        {
+            return await dataContext.Bets.FirstOrDefaultAsync(b => (b.UserId == userId && b.MatchId == matchId));
+        }
+
         public async void Place(Bet bet)
         {
             await dataContext.Bets.AddAsync(bet);
