@@ -20,3 +20,7 @@ tr {
 .matches {
   font-size: 18px;
 }
+
+.wide-td{
+  width: 330px;
+}

@@ -13,7 +13,7 @@
         <th scope="col" class="align-middle">1</th>
         <th scope="col" class="align-middle">0</th>
         <th scope="col" class="align-middle">2</th>
-        <th scope="col" class="align-middle" *ngIf="loggedIn() && !isBanned()">Bet!</th>
+        <th scope="col" class="align-middle wide-td" *ngIf="loggedIn() && !isBanned()">Your Bet</th>
       </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
         <td class="align-middle">{{match.teamAOdds}}</td>
         <td class="align-middle">{{match.drawOdds}}</td>
         <td class="align-middle">{{match.teamBOdds}}</td>
-        <td class="align-middle" *ngIf="loggedIn() && !isBanned()">
+        <td class="align-middle wide-td" *ngIf="loggedIn() && !isBanned()">
           <app-bet-form [match]="match"></app-bet-form>
         </td>
       </tr>
