@@ -19,8 +19,20 @@
     <tbody>
       <tr *ngFor="let match of matches">
         <td class="align-middle">{{match.date | date:'yyyy-MM-dd HH:mm'}}</td>
-        <td class="align-middle">{{match.teamA.name}}</td>
-        <td class="align-middle">{{match.teamB.name}}</td>
+        <td class="align-middle">
+          {{match.teamA.name}}
+          <button type="button" class="btn mb-1" style="background-color:transparent; border: 0px" placement="right" popoverTitle="{{match.teamA.name}} Details"
+                  popover="Coach: {{match.teamA.coach}}" triggers="mouseenter:mouseleave">
+            <i class="fa fa-info-circle"></i>
+          </button>
+        </td>
+        <td class="align-middle">
+          {{match.teamB.name}}
+          <button type="button" class="btn mb-1" style="background-color:transparent; border: 0px" placement="right" popoverTitle="{{match.teamB.name}} Details"
+                  popover="Coach: {{match.teamB.coach}}" triggers="mouseenter:mouseleave">
+            <i class="fa fa-info-circle"></i>
+          </button>
+        </td>
         <td class="align-middle">{{match.teamAOdds}}</td>
         <td class="align-middle">{{match.drawOdds}}</td>
         <td class="align-middle">{{match.teamBOdds}}</td>
