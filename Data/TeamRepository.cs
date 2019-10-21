@@ -35,5 +35,10 @@ namespace Witter.Data
         {
             return await dataContext.Teams.FirstOrDefaultAsync(t => t.Id == id);
         }
+
+        public IEnumerable<Team> GetTeams()
+        {
+            return dataContext.Teams;
+        }
     }
 }

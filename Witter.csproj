@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Witter-SPA\src\app\admin\" />
     <Folder Include="Witter-SPA\src\app\_models\" />
   </ItemGroup>
 

@@ -10,4 +10,6 @@ export interface Match {
   teamBOdds: number;
   drawOdds: number;
   score?: Score;
+  teamAId?: number;
+  teamBId?: number;
 }

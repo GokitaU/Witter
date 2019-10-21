@@ -58,6 +58,15 @@ namespace Witter.Controllers
             return Ok(matches);
         }
 
+        [HttpGet("adminView")]
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> GetMatchesForAdminView()
+        {
+            var matches = matchRepository.GetMatchesForAdmin();
+
+            return Ok(matches);
+        }
+
         [HttpGet("{id}", Name="GetMatch")]
         public async Task<IActionResult> GetMatch(int id)
         {
@@ -68,7 +77,7 @@ namespace Witter.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("add")]
-        public async Task<IActionResult> AddMatch([FromForm]MatchForCreateDto match)
+        public async Task<IActionResult> AddMatch(MatchForCreateDto match)
         {
             if(match.TeamAId == match.TeamBId)
             {
@@ -116,7 +125,7 @@ namespace Witter.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateMatch(int id, [FromForm]MatchForCreateDto match)
+        public async Task<IActionResult> UpdateMatch(int id, MatchForCreateDto match)
         {
             var matchToUpdate = await matchRepository.GetMatch(id);
 
@@ -137,7 +146,7 @@ namespace Witter.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("score/{id}")]
-        public async Task<IActionResult> updateScore(int id, [FromForm]ScoreForUpdateDto score)
+        public async Task<IActionResult> updateScore(int id, ScoreForUpdateDto score)
         {
             var match = await matchRepository.GetMatch(id);
 

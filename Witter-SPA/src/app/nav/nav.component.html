@@ -5,6 +5,17 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/matches']">Matches</a>
       </li>
+      <li *ngIf="isAdmin()" class="nav-item dropdown" routerLinkActive="active" dropdown>
+        <a class="nav-link dropdown-toggle text-light" dropdownToggle>
+          Admin Tools
+        </a>
+
+        <div class="dropdown-menu" *dropdownMenu>
+          <a class="dropdown-item" [routerLink]="['/admin/matches']">Matches</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">Teams</a>
+        </div>
+      </li>
     </ul>
 
     <ul class="navbar-nav ml-auto" *ngIf="loggedIn()">

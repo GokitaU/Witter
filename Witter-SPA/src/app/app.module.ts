@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +15,10 @@ import { RegisterComponent } from './register/register.component';
 import { MatchesComponent } from './matches/matches.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BetFormComponent } from './bet-form/bet-form.component';
+import { AdminMatchesComponent } from './admin/admin-matches/admin-matches.component';
+import { AdminMatchesFormComponent } from './admin/admin-matches-form/admin-matches-form.component';
+import { AdminMatchesFormEditComponent } from './admin/admin-matches-form-edit/admin-matches-form-edit.component';
+import { AdminScoreFormComponent } from './admin/admin-score-form/admin-score-form.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -24,7 +30,11 @@ export function tokenGetter() {
     NavComponent,
     RegisterComponent,
     MatchesComponent,
-    BetFormComponent
+    BetFormComponent,
+    AdminMatchesComponent,
+    AdminMatchesFormComponent,
+    AdminMatchesFormEditComponent,
+    AdminScoreFormComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +43,8 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     PopoverModule.forRoot(),
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

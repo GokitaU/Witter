@@ -5,35 +5,37 @@ import { throwError } from 'rxjs';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  intercept(req: import("C:/Dev/Witter/Witter/Witter/Witter-SPA/node_modules/@angular/common/http/http").HttpRequest<any>, next: import("C:/Dev/Witter/Witter/Witter/Witter-SPA/node_modules/@angular/common/http/http").HttpHandler): import("C:/Dev/Witter/Witter/Witter/Witter-SPA/node_modules/rxjs/internal/Observable").Observable<import('@angular/common/http').HttpEvent<any>> {
+  intercept(req: import("node_modules/@angular/common/http/http").HttpRequest<any>, next: import("@angular/common/http/http").HttpHandler): import("node_modules/rxjs/internal/Observable").Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError(error => {
-        if (error.status === 401) {
-          return throwError(error.statusText);
-        }
-
         if (error instanceof HttpErrorResponse) {
-          const appError = error.headers.get('Application-Error');
-
-          if (appError) {
-            return throwError(appError);
+          if (error.status === 401) {
+            return throwError(error.statusText);
           }
-        }
 
-        const serverErrors = error.error.errors;
-        let modelStateErrors = '';
+          const applicationError = error.headers.get('Application-Error');
 
-        if (serverErrors && typeof serverErrors === 'object') {
-          for (const key in serverErrors) {
-            if (serverErrors[key]) {
-              modelStateErrors += serverErrors[key] + '\n';
+          if (applicationError) {
+            console.error(applicationError);
+            return throwError(applicationError);
+          }
+
+          let serverError = error.error.errors;
+          let modalStateErrors = '';
+          if (serverError && typeof serverError === 'object') {
+            for (const key in serverError) {
+              if (serverError[key]) {
+                modalStateErrors += serverError[key] + '\n';
+              }
             }
           }
+
+          serverError = error.error;
+          return throwError(modalStateErrors || serverError || 'Server Error');
         }
-        return throwError(modelStateErrors || serverErrors || 'Server Error');
       })
-    );
-    }
+    )
+  }
 }
 
 export const ErrorInterceptorProvider = {

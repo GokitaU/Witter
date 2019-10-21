@@ -26,6 +26,14 @@ namespace Witter.Controllers
             this.dataContext = dataContext;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetTeams()
+        {
+            var teams = teamRepository.GetTeams();
+
+            return Ok(teams);
+        }
+
         [HttpGet("{id}", Name="GetTeam")]
         public async Task<IActionResult> GetTeam(int id)
         {

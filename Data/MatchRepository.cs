@@ -46,6 +46,11 @@ namespace Witter.Data
             return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score);
         }
 
+        public IEnumerable<Match> GetMatchesForAdmin()
+        {
+            return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score).Where(m => m.Score == null || m.Date > DateTime.Now);
+        }
+
         public IEnumerable<Match> GetTeamsMatches(int teamId)
         {
             return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score).Where(m => ((m.TeamA.Id == teamId) || (m.TeamB.Id == teamId)) && (m.Score != null));

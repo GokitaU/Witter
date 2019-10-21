@@ -11,6 +11,7 @@ namespace Witter.Data
         void Add(Team team);
         void Delete(Team team);
         Task<Team> GetTeam(int id);
+        IEnumerable<Team> GetTeams();
         Task<bool> Exists(int id);
     }
 }

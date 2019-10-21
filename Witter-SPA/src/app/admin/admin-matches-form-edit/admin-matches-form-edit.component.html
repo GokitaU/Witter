@@ -1,0 +1,93 @@
+<div class="container">
+  <h1 class="text-center mb-2">Edit Match</h1>
+  <hr />
+
+  <form [formGroup]="matchForm" (ngSubmit)="addMatch()">
+    <div class="row">
+      <div class="col-2">
+        <label for="teamAId">Home Team</label>
+      </div>
+      <div class="col-10">
+        <select class="form-control" id="teamAId" formControlName="teamAId" [ngClass]="{'is-invalid': matchForm.hasError('sameTeam')}">
+          <option *ngFor="let team of teams" value="{{team.id}}">{{team.name}}</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="matchForm.hasError('sameTeam')">
+          You cannot pick the same team twice.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-2">
+        <label for="teamBId">Away Team</label>
+      </div>
+      <div class="col-10">
+        <select class="form-control" id="teamBId" formControlName="teamBId" [ngClass]="{'is-invalid': matchForm.hasError('sameTeam')}">
+          <option *ngFor="let team of teams" value="{{team.id}}">{{team.name}}</option>
+        </select>
+        <div class="invalid-feedback" *ngIf="matchForm.hasError('sameTeam')">
+          You cannot pick the same team twice.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-2">
+        <label for="date">Date</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="datetime-local" id="date" formControlName="date" [ngClass]="{'is-invalid': matchForm.get('date').errors && matchForm.get('date').touched
+                                                                                                                     || matchForm.hasError('pastDate') && matchForm.get('date').touched}">
+        <div class="invalid-feedback" *ngIf="matchForm.get('date').errors && matchForm.get('date').touched">
+          Date is required.
+        </div>
+        <div class="invalid-feedback" *ngIf="matchForm.hasError('pastDate') && matchForm.get('date').touched">
+          You cannot pick past date.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-2">
+        <label for="teamAOdds">Home Team Win Odds</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="number" id="teamAOdds" formControlName="teamAOdds" [ngClass]="{'is-invalid': matchForm.get('teamAOdds').errors && matchForm.get('teamAOdds').touched}">
+        <div class="invalid-feedback" *ngIf="matchForm.get('teamAOdds').errors && matchForm.get('teamAOdds').touched">
+          Home Team Win Odds is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-2">
+        <label for="drawOdds">Draw Odds</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="number" id="drawOdds" formControlName="drawOdds" [ngClass]="{'is-invalid': matchForm.get('drawOdds').errors && matchForm.get('drawOdds').touched}">
+        <div class="invalid-feedback" *ngIf="matchForm.get('drawOdds').errors && matchForm.get('drawOdds').touched">
+          Draw Odds is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-2">
+        <label for="teamBOdds">Away Team Win Odds</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="number" id="teamBOdds" formControlName="teamBOdds" [ngClass]="{'is-invalid': matchForm.get('teamBOdds').errors && matchForm.get('teamBOdds').touched}">
+        <div class="invalid-feedback" *ngIf="matchForm.get('teamBOdds').errors && matchForm.get('teamBOdds').touched">
+          Away Team Win Odds is required.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group text-center mt-3">
+      <button type="submit" [disabled]="!matchForm.valid" class="btn btn-success btn-lg fixed-width">Save Match</button>
+      <button type="reset" class="btn btn-danger btn-lg fixed-width ml-2">Reset</button>
+    </div>
+
+  </form>
+</div>

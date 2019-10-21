@@ -1,0 +1,37 @@
+<div class="container">
+  <h1 class="text-center mb-2">Update Score</h1>
+  <hr />
+
+  <form [formGroup]="scoreForm" (ngSubmit)="updateScore()">
+
+    <div class="row">
+      <div class="col-2">
+        <label for="teamAGoals">{{ match.teamA.name }} Goals</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="number" id="teamAGoals" formControlName="teamAGoals" [ngClass]="{'is-invalid': scoreForm.get('teamAGoals').errors && scoreForm.get('teamAGoals').touched}">
+        <div class="invalid-feedback" *ngIf="scoreForm.get('teamAGoals').errors && scoreForm.get('teamAGoals').touched">
+          {{ match.teamA.name }} Goals is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-2">
+        <label for="teamBGoals">{{ match.teamB.name }} Goals</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="number" id="teamBGoals" formControlName="teamBGoals" [ngClass]="{'is-invalid': scoreForm.get('teamBGoals').errors && scoreForm.get('teamBGoals').touched}">
+        <div class="invalid-feedback" *ngIf="scoreForm.get('teamBGoals').errors && scoreForm.get('teamBGoals').touched">
+          {{ match.teamB.name }} Goals is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group text-center mt-3">
+      <button type="submit" [disabled]="!scoreForm.valid" class="btn btn-success btn-lg fixed-width">Update score</button>
+      <button type="reset" class="btn btn-danger btn-lg fixed-width ml-2">Reset</button>
+    </div>
+
+  </form>
+</div>

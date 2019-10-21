@@ -15,13 +15,12 @@ export class MatchesComponent implements OnInit {
   constructor(private matchService: MatchService, private authService: AuthService, private alertify: AlertifyService) { }
 
   ngOnInit() {
-    this.loadMatches();
+      this.loadMatches();
   }
 
   loadMatches() {
     this.matchService.getMatches().subscribe((matches: Match[]) => {
       this.matches = matches;
-      console.log(matches);
     }, error => {
       this.alertify.error(error);
       });

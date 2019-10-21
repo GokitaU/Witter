@@ -10,6 +10,7 @@ namespace Witter.Data
     {
         IEnumerable<Match> GetMatches(bool started, bool ended);
         IEnumerable<Match> GetTeamsMatches(int teamId);
+        IEnumerable<Match> GetMatchesForAdmin();
         Task<Match> GetMatch(int id);
         void Add(Match match);
         void Delete(Match match);
