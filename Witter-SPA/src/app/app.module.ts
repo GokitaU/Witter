@@ -19,6 +19,9 @@ import { AdminMatchesComponent } from './admin/admin-matches/admin-matches.compo
 import { AdminMatchesFormComponent } from './admin/admin-matches-form/admin-matches-form.component';
 import { AdminMatchesFormEditComponent } from './admin/admin-matches-form-edit/admin-matches-form-edit.component';
 import { AdminScoreFormComponent } from './admin/admin-score-form/admin-score-form.component';
+import { AdminTeamsComponent } from './admin/admin-teams/admin-teams.component';
+import { AdminTeamsFormComponent } from './admin/admin-teams-form/admin-teams-form.component';
+import { AdminTeamsFormEditComponent } from './admin/admin-teams-form-edit/admin-teams-form-edit.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -34,7 +37,10 @@ export function tokenGetter() {
     AdminMatchesComponent,
     AdminMatchesFormComponent,
     AdminMatchesFormEditComponent,
-    AdminScoreFormComponent
+    AdminScoreFormComponent,
+    AdminTeamsComponent,
+    AdminTeamsFormComponent,
+    AdminTeamsFormEditComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import { MatchService } from 'src/app/_services/match.service';
 import { Match } from 'src/app/_models/match';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Score } from 'src/app/_models/score';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-admin-score-form',
@@ -18,9 +19,10 @@ export class AdminScoreFormComponent implements OnInit {
   match: Match;
   score: Score;
 
-  constructor(private teamService: TeamService, private alertify: AlertifyService, private fb: FormBuilder, private matchService: MatchService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private teamService: TeamService, private alertify: AlertifyService, private fb: FormBuilder, private matchService: MatchService, private router: Router, private route: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.throwOutUser();
     this.getMatch(this.route.snapshot.paramMap.get("id"));
   }
 

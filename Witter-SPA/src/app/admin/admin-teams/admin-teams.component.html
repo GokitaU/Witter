@@ -1,0 +1,28 @@
+<h1 class="text-center mb-2">Manage Teams</h1>
+<hr />
+
+<div class="container mt-2 text-center">
+  <a class="btn btn-info text-white my-2 ml-1 my-sm-0" [routerLink]="['/admin/teams/add']">Add Team</a>
+</div>
+
+<div class="container mt-4 text-center">
+  <table class="table matches">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Name</th>
+        <th scope="col" class="align-middle">Coach</th>
+        <th scope="col" class="align-middle">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let team of teams">
+        <td class="align-middle">{{team.name}}</td>
+        <td class="align-middle">{{team.coach}}</td>
+        <td class="align-middle">
+          <button type="button" routerLink="/admin/teams/update/{{team.id}}" class="btn btn-info ml-2"><i class="fa fa-edit"></i></button>
+          <button type="button" (click)="deleteTeam(team.id)" class="btn btn-danger ml-2"><i class="fa fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

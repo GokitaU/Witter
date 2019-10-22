@@ -58,7 +58,7 @@ namespace Witter.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("add")]
-        public async Task<IActionResult> AddTeam([FromForm]Team team)
+        public async Task<IActionResult> AddTeam(Team team)
         {
             teamRepository.Add(team);
 
@@ -93,7 +93,7 @@ namespace Witter.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateTeam(int id, [FromForm]Team team)
+        public async Task<IActionResult> UpdateTeam(int id, Team team)
         {
             var teamToEdit = await teamRepository.GetTeam(id);
 

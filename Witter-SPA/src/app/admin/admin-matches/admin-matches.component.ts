@@ -5,6 +5,7 @@ import { Match } from 'src/app/_models/match';
 import { Router } from '@angular/router';
 
 import * as alertify from 'alertifyjs';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-admin-matches',
@@ -14,9 +15,10 @@ import * as alertify from 'alertifyjs';
 export class AdminMatchesComponent implements OnInit {
   matches: Match[];
 
-  constructor(private matchService: MatchService, private alertify: AlertifyService, private router: Router) { }
+  constructor(private matchService: MatchService, private alertify: AlertifyService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.throwOutUser();
     this.loadMatches();
   }
 
@@ -25,7 +27,6 @@ export class AdminMatchesComponent implements OnInit {
       this.matches = matches;
     }, error => {
       this.alertify.error(error);
-      this.router.navigate(['/matches']);
     });
   }
 

@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatchService } from 'src/app/_services/match.service';
 import { Match } from 'src/app/_models/match';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-admin-matches-form',
@@ -17,9 +18,10 @@ export class AdminMatchesFormComponent implements OnInit {
   matchForm: FormGroup;
   match: Match;
 
-  constructor(private teamService: TeamService, private alertify: AlertifyService, private fb: FormBuilder, private matchService: MatchService, private router: Router) { }
+  constructor(private teamService: TeamService, private alertify: AlertifyService, private fb: FormBuilder, private matchService: MatchService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.throwOutUser();
     this.getTeams();
     this.buildMatchForm();
   }
@@ -60,7 +62,6 @@ export class AdminMatchesFormComponent implements OnInit {
   addMatch() {
     if (this.matchForm.valid) {
       this.match = Object.assign({}, this.matchForm.value);
-      console.log(this.match)
 
       this.matchService.addMatch(this.match).subscribe(() => {
         this.alertify.success("Added match successfully");

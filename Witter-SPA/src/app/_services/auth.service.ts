@@ -4,6 +4,8 @@ import { map } from 'rxjs/operators';
 import { User } from '../_models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { AlertifyService } from './alertify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class AuthService {
   jwtHelper = new JwtHelperService;
   decodedToken: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router, private alertify: AlertifyService) { }
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'login', model)
@@ -41,5 +43,12 @@ export class AuthService {
 
   getRole() {
     return localStorage.getItem('role');
+  }
+
+  throwOutUser() {
+    if (this.getRole() != "Admin") {
+      this.alertify.error('You are not allowed to access this page!');
+      this.router.navigate(['/matches']);
+    }
   }
 }

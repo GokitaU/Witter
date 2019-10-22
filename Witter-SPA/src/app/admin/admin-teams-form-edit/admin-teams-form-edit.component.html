@@ -1,0 +1,37 @@
+<div class="container">
+  <h1 class="text-center mb-2">Edit Team</h1>
+  <hr />
+
+  <form [formGroup]="teamForm" (ngSubmit)="updateTeam()">
+    <div class="row">
+      <div class="col-2">
+        <label for="name">Name</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="text" id="name" formControlName="name" [ngClass]="{'is-invalid': teamForm.get('name').errors && teamForm.get('name').touched}">
+        <div class="invalid-feedback" *ngIf="teamForm.get('name').errors && teamForm.get('name').touched">
+          Name is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-2">
+        <label for="coach">Coach</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="text" id="coach" formControlName="coach" [ngClass]="{'is-invalid': teamForm.get('coach').errors && teamForm.get('coach').touched}">
+        <div class="invalid-feedback" *ngIf="teamForm.get('coach').errors && teamForm.get('coach').touched">
+          Coach is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group text-center mt-3">
+      <button type="button" routerLink="/admin/teams" class="btn btn-primary mr-2"><i class="fa fa-chevron-left"></i></button>
+      <button type="submit" [disabled]="!teamForm.valid" class="btn btn-success btn-lg fixed-width">Update Team</button>
+      <button type="reset" class="btn btn-danger btn-lg fixed-width ml-2">Reset</button>
+    </div>
+
+  </form>
+</div>

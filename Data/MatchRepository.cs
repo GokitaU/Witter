@@ -35,20 +35,20 @@ namespace Witter.Data
         {
             if (notStarted)
             {
-                return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score).Where(m => m.Date > DateTime.Now);
+                return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score).Where(m => m.Date > DateTime.Now).OrderBy(m => m.Date);
             }
 
             if (ended)
             {
-                return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score).Where(m => m.Score != null);
+                return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score).Where(m => m.Score != null).OrderBy(m => m.Date);
             }
 
-            return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score);
+            return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score).OrderBy(m => m.Date);
         }
 
         public IEnumerable<Match> GetMatchesForAdmin()
         {
-            return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score).Where(m => m.Score == null || m.Date > DateTime.Now);
+            return dataContext.Matches.Include(m => m.TeamA).Include(m => m.TeamB).Include(m => m.Score).Where(m => m.Score == null || m.Date > DateTime.Now).OrderBy(m => m.Date);
         }
 
         public IEnumerable<Match> GetTeamsMatches(int teamId)

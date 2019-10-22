@@ -16,4 +16,20 @@ export class TeamService {
   getTeams(): Observable<Team[]> {
     return this.http.get<Team[]>(this.baseUrl);
   }
+
+  getTeam(id): Observable<Team> {
+    return this.http.get<Team>(this.baseUrl + id);
+  }
+
+  deleteTeam(id) {
+    return this.http.post(this.baseUrl + 'delete/' + id, {});
+  }
+
+  addTeam(team: Team) {
+    return this.http.post(this.baseUrl + 'add', team);
+  }
+
+  updateTeam(id: any, team: Team) {
+    return this.http.put(this.baseUrl + 'update/' + id, team);
+  }
 }

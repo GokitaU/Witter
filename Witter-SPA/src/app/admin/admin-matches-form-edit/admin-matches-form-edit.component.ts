@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatchService } from 'src/app/_services/match.service';
 import { Match } from 'src/app/_models/match';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-admin-matches-form-edit',
@@ -17,9 +18,10 @@ export class AdminMatchesFormEditComponent implements OnInit {
   matchForm: FormGroup;
   match: Match;
 
-  constructor(private teamService: TeamService, private alertify: AlertifyService, private fb: FormBuilder, private matchService: MatchService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private teamService: TeamService, private alertify: AlertifyService, private fb: FormBuilder, private authService: AuthService, private matchService: MatchService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.authService.throwOutUser();
     this.getTeams();
     this.getMatch(this.route.snapshot.paramMap.get("id"));
   }
