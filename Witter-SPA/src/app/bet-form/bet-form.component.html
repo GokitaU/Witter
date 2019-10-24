@@ -1,10 +1,10 @@
-<form [formGroup]="betForm" (ngSubmit)="placeBet()" class="form-inline text-center" *ngIf="!placedBet()">
-  <select class="form-control" formControlName="prediction">
-    <option value="1">{{match.teamA.name}} Win</option>
-    <option value="0">Draw</option>
-    <option value="2">{{match.teamB.name}} Win</option>
-  </select>
-  <button type="submit" class="btn btn-success ml-2"><i class="fa fa-check-circle"></i></button>
+<form [formGroup]="betForm" (ngSubmit)="placeBet()" class="form-inline text-center justify-content-center" *ngIf="!placedBet()">
+    <select class="form-control fixed-dropdown" formControlName="prediction">
+      <option value="1">{{match.teamA.name}} Win</option>
+      <option value="0">Draw</option>
+      <option value="2">{{match.teamB.name}} Win</option>
+    </select>
+    <button type="submit" class="btn btn-success ml-2 small-button form-control"><i class="fa fa-check-circle"></i></button>
 </form>
 
 <span *ngIf="placedBet()">{{prediction}}</span>

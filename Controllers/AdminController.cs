@@ -115,8 +115,9 @@ namespace Witter.Controllers
             return Ok(userToReturn);
         }
 
+        [AllowAnonymous]
         [HttpGet("users")]
-        public async Task<IActionResult> GetUsersList()
+        public async Task<IActionResult> GetUserList()
         {
             var users = userRepository.GetUsers();
 

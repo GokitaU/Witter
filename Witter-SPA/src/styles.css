@@ -9,6 +9,10 @@
   width: 300px;
 }
 
+.small-button {
+  width: 70px !important;
+}
+
 a:hover {
   cursor: pointer;
 }
@@ -19,8 +23,39 @@ tr {
 
 .matches {
   font-size: 18px;
+  border: 3px solid #000;
+}
+
+.matches td {
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+  }
+
+.matches td:first-child {
+  border-left: none;
+}
+
+.matches td:last-child {
+  border-right: none;
+}
+
+.matches th {
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+}
+
+.matches th:first-child {
+  border-left: none;
+}
+
+.matches th:last-child {
+  border-right: none;
 }
 
 .wide-td{
   width: 330px;
+}
+
+.fixed-dropdown{
+  width: 200px !important;
 }

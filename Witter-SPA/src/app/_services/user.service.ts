@@ -16,6 +16,10 @@ export class UserService {
     return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
 
+  getUserRanking(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'users');
+  }
+
   getAdminUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'users/admin');
   }

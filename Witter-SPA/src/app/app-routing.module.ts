@@ -11,11 +11,13 @@ import { AdminTeamsFormComponent } from './admin/admin-teams-form/admin-teams-fo
 import { AdminTeamsFormEditComponent } from './admin/admin-teams-form-edit/admin-teams-form-edit.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminUsersFormBanComponent } from './admin/admin-users-form-ban/admin-users-form-ban.component';
+import { RankingComponent } from './ranking/ranking.component';
 
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'matches', component: MatchesComponent },
+  { path: 'ranking', component: RankingComponent },
   { path: 'admin/matches', component: AdminMatchesComponent },
   { path: 'admin/matches/add', component: AdminMatchesFormComponent },
   { path: 'admin/matches/update/:id', component: AdminMatchesFormEditComponent },

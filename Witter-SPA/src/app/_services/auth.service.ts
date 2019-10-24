@@ -26,6 +26,7 @@ export class AuthService {
           if (user) {
             localStorage.setItem('token', user.token);
             localStorage.setItem('role', user.siteRole);
+            localStorage.setItem('user', user.userToReturn.id);
             this.decodedToken = this.jwtHelper.decodeToken(user.token);
           }
         })
@@ -43,6 +44,10 @@ export class AuthService {
 
   getRole() {
     return localStorage.getItem('role');
+  }
+
+  getId() {
+    return localStorage.getItem('user');
   }
 
   throwOutUser() {

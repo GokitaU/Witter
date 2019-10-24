@@ -17,7 +17,7 @@
         <td class="align-middle">{{user.username}}</td>
         <td class="align-middle">{{user.score | number:'1.0-2'}}</td>
         <td class="align-middle">
-          <button type="button" (click)="adminRights(user.id)" class="btn btn-danger ml-2"><i class="fa fa-user-times"></i></button>
+          <button type="button" (click)="adminRights(user.id)" class="btn btn-danger ml-2 small-button"><i class="fa fa-user-times"></i></button>
         </td>
       </tr>
     </tbody>
@@ -42,8 +42,8 @@
         <td class="align-middle">{{user.username}}</td>
         <td class="align-middle">{{user.score | number:'1.0-2'}}</td>
         <td class="align-middle">
-          <button type="button" (click)="adminRights(user.id)" class="btn btn-success ml-2"><i class="fa fa-user-plus"></i></button>
-          <button type="button" routerLink="/admin/users/ban/{{user.id}}" class="btn btn-danger ml-2"><i class="fa fa-ban"></i></button>
+          <button type="button" (click)="adminRights(user.id)" class="btn btn-success ml-2 small-button"><i class="fa fa-user-plus"></i></button>
+          <button type="button" routerLink="/admin/users/ban/{{user.id}}" class="btn btn-danger ml-2 small-button"><i class="fa fa-ban"></i></button>
         </td>
       </tr>
     </tbody>
@@ -71,7 +71,7 @@
           <span *ngIf="!permBan(user)">Till {{ user.ban  | date:'yyyy-MM-dd' }}</span>
         </td>
         <td class="align-middle">
-          <button type="button" (click)="unban(user.id)" class="btn btn-success ml-2"><i class="fa fa-ban"></i></button>
+          <button type="button" (click)="unban(user.id)" class="btn btn-success ml-2 small-button"><i class="fa fa-ban"></i></button>
         </td>
       </tr>
     </tbody>

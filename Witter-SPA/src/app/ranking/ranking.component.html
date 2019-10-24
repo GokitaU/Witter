@@ -1,0 +1,26 @@
+<h1 class="text-center mb-2">Overall Ranking</h1>
+<hr />
+
+<div class="container mt-4 text-center">
+  <table class="table matches">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Place</th>
+        <th scope="col" class="align-middle">Username</th>
+        <th scope="col" class="align-middle">Points</th>
+        <th scope="col" class="align-middle">Info</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; let i = index" [ngClass]="{'text-warning': isItMe(user)==true}">
+        <td class="align-middle">{{i+1}}</td>
+        <td class="align-middle">{{user.username}}</td>
+        <td class="align-middle">{{user.score | number:'1.0-2'}}</td>
+        <td class="align-middle">
+          <span *ngIf="user.ban != null">Banned until {{user.ban | date:'yyyy-MM-dd'}}</span>
+          <span *ngIf="user.isAdmin">Administrator</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

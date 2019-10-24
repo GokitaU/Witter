@@ -39,9 +39,9 @@
         <td class="align-middle">{{match.drawOdds}}</td>
         <td class="align-middle">{{match.teamBOdds}}</td>
         <td class="align-middle">
-          <button type="button" *ngIf="!checkDateTime(match)" routerLink="/admin/matches/update/{{match.id}}" class="btn btn-info ml-2"><i class="fa fa-edit"></i></button>
-          <button type="button" *ngIf="checkDateTime(match)" routerLink="/admin/matches/score/{{match.id}}" class="btn btn-success ml-2"><i class="fa fa-plus"></i></button>
-          <button type="button" (click)="deleteMatch(match.id)" class="btn btn-danger ml-2"><i class="fa fa-trash"></i></button>
+          <button type="button" *ngIf="!checkDateTime(match)" routerLink="/admin/matches/update/{{match.id}}" class="btn btn-info ml-2 small-button"><i class="fa fa-edit"></i></button>
+          <button type="button" *ngIf="checkDateTime(match)" routerLink="/admin/matches/score/{{match.id}}" class="btn btn-success ml-2 small-button"><i class="fa fa-plus"></i></button>
+          <button type="button" (click)="deleteMatch(match.id)" class="btn btn-danger ml-2 small-button"><i class="fa fa-trash"></i></button>
         </td>
       </tr>
     </tbody>

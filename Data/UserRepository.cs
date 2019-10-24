@@ -43,7 +43,7 @@ namespace Witter.Data
 
         public IEnumerable<User> GetUsers()
         {
-            return dataContext.Users;
+            return dataContext.Users.Where(u => u.PermanentBan == false).OrderByDescending(u => u.Score);
         }
     }
 }

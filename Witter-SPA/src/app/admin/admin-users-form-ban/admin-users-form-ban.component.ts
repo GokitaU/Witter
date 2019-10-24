@@ -34,7 +34,7 @@ export class AdminUsersFormBanComponent implements OnInit {
 
   generateBanForm() {
     this.banForm = this.fb.group({
-      ban: ['', []],
+      ban: [{ value: '', disabled: false }],
       permanentBan: ['', []]
     });
   }
@@ -51,12 +51,24 @@ export class AdminUsersFormBanComponent implements OnInit {
     }
 
     this.userService.ban(this.route.snapshot.paramMap.get("id"), this.bannedUser).subscribe(() => {
+      console.log(this.banForm.value);
       this.alertify.success("Banned user successfully");
     }, error => {
       this.alertify.error(error);
       }, () => {
         this.router.navigate(['/admin/users']);
       });
+  }
+
+  permBanSelected() {
+    console.log(this.banForm.get('permanentBan').value)
+    return this.banForm.get('permanentBan').value == "true" ? true : false;
+  }
+
+  toggle() {
+    console.log("aaa");
+    var control = this.banForm.get('ban')
+    control.disabled ? control.enable() : control.disable()
   }
 
 }
