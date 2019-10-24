@@ -21,6 +21,21 @@ namespace Witter.Data
             dataContext.Remove(user);
         }
 
+        public IEnumerable<User> GetAdminUsers()
+        {
+            return dataContext.Users.Where(u => u.IsAdmin == true).OrderBy(u => u.Username);
+        }
+
+        public IEnumerable<User> GetBannedUsers()
+        {
+            return dataContext.Users.Where(u => u.PermanentBan == true || u.Ban != null).OrderBy(u => u.Username);
+        }
+
+        public IEnumerable<User> GetNotBannedUsers()
+        {
+            return dataContext.Users.Where(u => u.PermanentBan == false && u.Ban == null && u.IsAdmin == false).OrderBy(u => u.Username);
+        }
+
         public async Task<User> GetUser(int userId)
         {
             return await dataContext.Users.FirstOrDefaultAsync(u => u.Id == userId);

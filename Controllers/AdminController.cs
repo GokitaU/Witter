@@ -28,57 +28,23 @@ namespace Witter.Controllers
             this.mapper = mapper;
         }
 
-        [HttpPut("permban/{id}")]
-        public async Task<IActionResult> AddPermBan(int id)
-        {
-            var user = await userRepository.GetUser(id);
-
-            if (user.PermanentBan)
-            {
-                return BadRequest("User is already banned!");
-            }
-
-            user.PermanentBan = true;
-
-            if (await dataContext.Commit())
-            {
-                return NoContent();
-            }
-
-            throw new Exception($"Banning user {id} failed on save.");
-        }
-
-        [HttpPut("unpermban/{id}")]
-        public async Task<IActionResult> RemovePermBan(int id)
-        {
-            var user = await userRepository.GetUser(id);
-
-            if (!user.PermanentBan)
-            {
-                return BadRequest("User is not banned!");
-            }
-
-            user.PermanentBan = false;
-
-            if (await dataContext.Commit())
-            {
-                return NoContent();
-            }
-
-            throw new Exception($"Unbanning user {id} failed on save.");
-        }
-
         [HttpPut("ban/{id}")]
-        public async Task<IActionResult> AddBan(int id, [FromForm]DateTime date)
+        public async Task<IActionResult> AddBan(int id, UserForBanDto userForBanDto)
         {
             var user = await userRepository.GetUser(id);
+
+            if(userForBanDto.Ban == null && userForBanDto.PermanentBan == false)
+            {
+                return BadRequest("Something went wrong");
+            }
 
             if (user.PermanentBan)
             {
                 return BadRequest("User is already banned!");
             }
 
-            user.Ban = date;
+            user.PermanentBan = userForBanDto.PermanentBan;
+            user.Ban = userForBanDto.Ban;
 
             if (await dataContext.Commit())
             {
@@ -93,12 +59,13 @@ namespace Witter.Controllers
         {
             var user = await userRepository.GetUser(id);
 
-            if (user.Ban == null)
+            if (user.Ban == null && user.PermanentBan == false)
             {
                 return BadRequest("User is not banned!");
             }
 
             user.Ban = null;
+            user.PermanentBan = false;
 
             if (await dataContext.Commit())
             {
@@ -138,10 +105,50 @@ namespace Witter.Controllers
             return BadRequest($"Could not grant admin rights to the user {id}");
         }
 
+        [HttpGet("users/{id}")]
+        public async Task<IActionResult> GetUser(int id)
+        {
+            var user = await userRepository.GetUser(id);
+
+            var userToReturn = mapper.Map<UserForAdminDto>(user);
+
+            return Ok(userToReturn);
+        }
+
         [HttpGet("users")]
         public async Task<IActionResult> GetUsersList()
         {
             var users = userRepository.GetUsers();
+
+            var usersToReturn = mapper.Map<IEnumerable<UserForAdminDto>>(users);
+
+            return Ok(usersToReturn);
+        }
+
+        [HttpGet("users/admin")]
+        public async Task<IActionResult> GetAdminUsersList()
+        {
+            var users = userRepository.GetAdminUsers();
+
+            var usersToReturn = mapper.Map<IEnumerable<UserForAdminDto>>(users);
+
+            return Ok(usersToReturn);
+        }
+
+        [HttpGet("users/banned")]
+        public async Task<IActionResult> GetBannedUsersList()
+        {
+            var users = userRepository.GetBannedUsers();
+
+            var usersToReturn = mapper.Map<IEnumerable<UserForAdminDto>>(users);
+
+            return Ok(usersToReturn);
+        }
+
+        [HttpGet("users/notbanned")]
+        public async Task<IActionResult> GetNotBannedUsersList()
+        {
+            var users = userRepository.GetNotBannedUsers();
 
             var usersToReturn = mapper.Map<IEnumerable<UserForAdminDto>>(users);
 

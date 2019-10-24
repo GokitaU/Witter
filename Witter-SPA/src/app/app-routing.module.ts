@@ -9,6 +9,8 @@ import { AdminScoreFormComponent } from './admin/admin-score-form/admin-score-fo
 import { AdminTeamsComponent } from './admin/admin-teams/admin-teams.component';
 import { AdminTeamsFormComponent } from './admin/admin-teams-form/admin-teams-form.component';
 import { AdminTeamsFormEditComponent } from './admin/admin-teams-form-edit/admin-teams-form-edit.component';
+import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
+import { AdminUsersFormBanComponent } from './admin/admin-users-form-ban/admin-users-form-ban.component';
 
 
 const routes: Routes = [
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'admin/teams', component: AdminTeamsComponent },
   { path: 'admin/teams/add', component: AdminTeamsFormComponent },
   { path: 'admin/teams/update/:id', component: AdminTeamsFormEditComponent },
+  { path: 'admin/users', component: AdminUsersComponent },
+  { path: 'admin/users/ban/:id', component: AdminUsersFormBanComponent },
   { path: '**', redirectTo: 'matches', pathMatch: 'full' }
 ];
 

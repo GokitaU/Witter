@@ -11,5 +11,8 @@ namespace Witter.Data
         Task<User> GetUser(int userId);
         void Delete(User user);
         IEnumerable<User> GetUsers();
+        IEnumerable<User> GetBannedUsers();
+        IEnumerable<User> GetNotBannedUsers();
+        IEnumerable<User> GetAdminUsers();
     }
 }

@@ -1,0 +1,81 @@
+<h1 class="text-center mb-2">Manage Users</h1>
+<hr />
+
+<div class="container mt-4 text-center">
+  <h4 class="text-center mb-2">Administrators</h4>
+
+  <table class="table matches">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Username</th>
+        <th scope="col" class="align-middle">Score</th>
+        <th scope="col" class="align-middle">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of adminUsers">
+        <td class="align-middle">{{user.username}}</td>
+        <td class="align-middle">{{user.score | number:'1.0-2'}}</td>
+        <td class="align-middle">
+          <button type="button" (click)="adminRights(user.id)" class="btn btn-danger ml-2"><i class="fa fa-user-times"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr />
+
+<div class="container mt-4 text-center">
+  <h4 class="text-center mb-2">Regular Users</h4>
+
+  <table class="table matches mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Username</th>
+        <th scope="col" class="align-middle">Score</th>
+        <th scope="col" class="align-middle">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of notBannedUsers">
+        <td class="align-middle">{{user.username}}</td>
+        <td class="align-middle">{{user.score | number:'1.0-2'}}</td>
+        <td class="align-middle">
+          <button type="button" (click)="adminRights(user.id)" class="btn btn-success ml-2"><i class="fa fa-user-plus"></i></button>
+          <button type="button" routerLink="/admin/users/ban/{{user.id}}" class="btn btn-danger ml-2"><i class="fa fa-ban"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr />
+
+<div class="container mt-4 text-center">
+  <h4 class="text-center mb-2">Banned Users</h4>
+
+  <table class="table matches mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Username</th>
+        <th scope="col" class="align-middle">Ban</th>
+        <th scope="col" class="align-middle">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of bannedUsers">
+        <td class="align-middle">{{user.username}}</td>
+        <td class="align-middle">
+          <span *ngIf="permBan(user)">Permanent</span>
+          <span *ngIf="!permBan(user)">Till {{ user.ban  | date:'yyyy-MM-dd' }}</span>
+        </td>
+        <td class="align-middle">
+          <button type="button" (click)="unban(user.id)" class="btn btn-success ml-2"><i class="fa fa-ban"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
