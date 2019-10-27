@@ -59,3 +59,11 @@ tr {
 .fixed-dropdown{
   width: 200px !important;
 }
+
+.bet-won {
+  background-color: #026002;
+}
+
+.bet-lost {
+  background-color: #600202;
+}

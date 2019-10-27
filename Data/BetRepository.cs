@@ -33,7 +33,7 @@ namespace Witter.Data
 
         public IEnumerable<Bet> GetBetsByUser(int userId)
         {
-            return dataContext.Bets.Where(b => b.UserId == userId);
+            return dataContext.Bets.Where(b => b.UserId == userId).OrderByDescending(b => b.Id);
         }
 
         public async Task<Bet> GetBetsByUserAndMatch(int userId, int matchId)

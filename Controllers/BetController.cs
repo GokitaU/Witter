@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +21,15 @@ namespace Witter.Controllers
         private readonly IMatchRepository matchRepository;
         private readonly IUserRepository userRepository;
         private readonly DataContext dataContext;
+        private readonly IMapper mapper;
 
-        public BetController(IBetRepository betRepository, IMatchRepository matchRepository, IUserRepository userRepository, DataContext dataContext)
+        public BetController(IBetRepository betRepository, IMatchRepository matchRepository, IUserRepository userRepository, DataContext dataContext, IMapper mapper)
         {
             this.betRepository = betRepository;
             this.matchRepository = matchRepository;
             this.userRepository = userRepository;
             this.dataContext = dataContext;
+            this.mapper = mapper;
         }
 
         [Authorize(Roles = "Admin,User")]
@@ -98,11 +101,20 @@ namespace Witter.Controllers
     }
 
         [HttpGet("user/{userId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetBetsByUser(int userId)
         {
             var bets = betRepository.GetBetsByUser(userId);
 
-            return Ok(bets);
+            var betsToReturn = mapper.Map<IEnumerable<BetForClientDto>>(bets);
+
+            foreach (var b in bets.Zip(betsToReturn, Tuple.Create))
+            {
+                //temporary solution
+                b.Item2.Match = await matchRepository.GetMatch(b.Item1.MatchId);
+            }
+
+            return Ok(betsToReturn);
         }
 
         [HttpGet("user/match/{matchId}")]

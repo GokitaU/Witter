@@ -6,6 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { AlertifyService } from './alertify.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthService {
   jwtHelper = new JwtHelperService;
   decodedToken: any;
 
-  constructor(private http: HttpClient, private router: Router, private alertify: AlertifyService) { }
+  constructor(private http: HttpClient, private router: Router, private alertify: AlertifyService, private userService: UserService) { }
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'login', model)
@@ -28,9 +29,19 @@ export class AuthService {
             localStorage.setItem('role', user.siteRole);
             localStorage.setItem('user', user.userToReturn.id);
             this.decodedToken = this.jwtHelper.decodeToken(user.token);
+
+            this.autoUnban(user.userToReturn);
           }
         })
       );
+  }
+
+  autoUnban(user: User) {
+    if (user.ban != null) {
+      if (new Date(user.ban).getTime() < new Date().getTime()) {
+        this.userService.unban(user.id);
+      }
+    }
   }
 
   register(user: User) {

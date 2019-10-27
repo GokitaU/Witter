@@ -12,6 +12,8 @@ import { AdminTeamsFormEditComponent } from './admin/admin-teams-form-edit/admin
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminUsersFormBanComponent } from './admin/admin-users-form-ban/admin-users-form-ban.component';
 import { RankingComponent } from './ranking/ranking.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.component';
 
 
 const routes: Routes = [
@@ -27,6 +29,8 @@ const routes: Routes = [
   { path: 'admin/teams/update/:id', component: AdminTeamsFormEditComponent },
   { path: 'admin/users', component: AdminUsersComponent },
   { path: 'admin/users/ban/:id', component: AdminUsersFormBanComponent },
+  { path: 'user/:id', component: UserProfileComponent },
+  { path: 'user/:id/edit', component: UserProfileEditComponent },
   { path: '**', redirectTo: 'matches', pathMatch: 'full' }
 ];
 

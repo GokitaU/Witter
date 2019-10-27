@@ -38,4 +38,8 @@ export class NavComponent implements OnInit {
     this.alertify.success('Logged out successfully');
     this.router.navigate(['/matches']);
   }
+
+  goToProfile() {
+    this.router.navigate(['/user/' + this.authService.getId()]);
+  }
 }

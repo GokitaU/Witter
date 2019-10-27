@@ -14,7 +14,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let user of adminUsers">
-        <td class="align-middle">{{user.username}}</td>
+        <td class="align-middle"><a routerLink="/user/{{user.id}}">{{user.username}}</a></td>
         <td class="align-middle">{{user.score | number:'1.0-2'}}</td>
         <td class="align-middle">
           <button type="button" (click)="adminRights(user.id)" class="btn btn-danger ml-2 small-button"><i class="fa fa-user-times"></i></button>
@@ -39,7 +39,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let user of notBannedUsers">
-        <td class="align-middle">{{user.username}}</td>
+        <td class="align-middle"><a routerLink="/user/{{user.id}}">{{user.username}}</a></td>
         <td class="align-middle">{{user.score | number:'1.0-2'}}</td>
         <td class="align-middle">
           <button type="button" (click)="adminRights(user.id)" class="btn btn-success ml-2 small-button"><i class="fa fa-user-plus"></i></button>
@@ -65,7 +65,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let user of bannedUsers">
-        <td class="align-middle">{{user.username}}</td>
+        <td class="align-middle"><a routerLink="/user/{{user.id}}">{{user.username}}</a></td>
         <td class="align-middle">
           <span *ngIf="permBan(user)">Permanent</span>
           <span *ngIf="!permBan(user)">Till {{ user.ban  | date:'yyyy-MM-dd' }}</span>

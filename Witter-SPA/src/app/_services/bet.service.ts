@@ -20,4 +20,8 @@ export class BetService {
   getBet(matchId: number): Observable<Bet> {
     return this.http.get<Bet>(this.baseUrl + 'user/match/' + matchId);
   }
+
+  getBetsByUser(userId): Observable<Bet[]> {
+    return this.http.get<Bet[]>(this.baseUrl + 'user/' + userId);
+  }
 }

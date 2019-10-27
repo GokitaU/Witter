@@ -1,0 +1,41 @@
+<div class="container">
+  <h1 class="text-center mb-2">Edit Your Profile</h1>
+  <hr />
+
+  <form [formGroup]="passForm" (ngSubmit)="updatePass()">
+    <div class="row">
+      <div class="col-2">
+        <label for="password">Password</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="password" id="password" formControlName="password" [ngClass]="{'is-invalid': passForm.get('password').errors && passForm.get('password').touched}">
+        <div class="invalid-feedback" *ngIf="passForm.get('password').errors && passForm.get('password').touched">
+          Password is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-2">
+        <label for="confirmPassword">Confirm Password</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="password" id="confirmPassword" formControlName="confirmPassword" [ngClass]="{'is-invalid': passForm.get('confirmPassword').errors && passForm.get('confirmPassword').touched
+                                                                                                            || passForm.hasError('mismatch') && passForm.get('confirmPassword').touched}">
+        <div class="invalid-feedback" *ngIf="passForm.get('confirmPassword').errors && passForm.get('confirmPassword').touched">
+          Password is required.
+        </div>
+        <div class="invalid-feedback" *ngIf="passForm.hasError('mismatch') && passForm.get('confirmPassword').touched">
+          Password must match.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group text-center mt-3">
+      <button type="button" (click)="return()" class="btn btn-primary mr-2"><i class="fa fa-chevron-left"></i></button>
+      <button type="submit" [disabled]="!passForm.valid" class="btn btn-success btn-lg fixed-width">Update Profile</button>
+      <button type="reset" class="btn btn-danger btn-lg fixed-width ml-2">Reset</button>
+    </div>
+
+  </form>
+</div>

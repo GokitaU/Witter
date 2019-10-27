@@ -1,0 +1,93 @@
+<h1 class="text-center mb-2">Username: {{ user.username }}</h1>
+<h1 class="text-center mb-2">Score: {{ user.score | number:'1.0-2' }}</h1>
+<h1 class="text-center mb-2" *ngIf="user.permanentBan">Banned permanently</h1>
+<h1 class="text-center mb-2" *ngIf="user.ban != null">Banned until {{user.ban | date:'yyyy-MM-dd'}}</h1>
+<hr />
+
+<div class="container mt-2 text-center" *ngIf="isItMe()">
+  <a class="btn btn-info text-white my-2 ml-1 my-sm-0" routerLink="/user/{{user.id}}/edit">Edit Profile</a>
+  <hr />
+</div>
+
+<div class="container" *ngIf="isItMe()">
+  <h4 class="text-center mb-2">Bets - Upcoming Matches</h4>
+  <table class="table matches text-center">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Date</th>
+        <th scope="col" class="align-middle">Home Team</th>
+        <th scope="col" class="align-middle">Away Team</th>
+        <th scope="col" class="align-middle">Prediction</th>
+        <th scope="col" class="align-middle">Points</th>
+        <th scope="col" class="align-middle">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let bet of bets">
+        <tr *ngIf="!matchPast(bet.match)">
+          <td class="align-middle">{{bet.match.date | date:'yyyy-MM-dd HH:mm'}}</td>
+          <td class="align-middle">
+            {{bet.match.teamA.name}}
+            <button type="button" class="btn mb-1" style="background-color:transparent; border: 0px" placement="right" popoverTitle="{{bet.match.teamA.name}} Details"
+                    popover="Coach: {{bet.match.teamA.coach}}" triggers="mouseenter:mouseleave">
+              <i class="fa fa-info-circle"></i>
+            </button>
+          </td>
+          <td class="align-middle">
+            {{bet.match.teamB.name}}
+            <button type="button" class="btn mb-1" style="background-color:transparent; border: 0px" placement="right" popoverTitle="{{bet.match.teamB.name}} Details"
+                    popover="Coach: {{bet.match.teamB.coach}}" triggers="mouseenter:mouseleave">
+              <i class="fa fa-info-circle"></i>
+            </button>
+          </td>
+          <td class="align-middle">{{bet.prediction}}</td>
+          <td class="align-middle">{{bet.odds-1 | number:'1.0-2'}}</td>
+          <td class="align-middle">? - ?</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<hr />
+<div class="container">
+  <h4 class="text-center mb-2">Bets - Past Matches</h4>
+  <table class="table matches text-center">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Date</th>
+        <th scope="col" class="align-middle">Home Team</th>
+        <th scope="col" class="align-middle">Away Team</th>
+        <th scope="col" class="align-middle">Prediction</th>
+        <th scope="col" class="align-middle">Points</th>
+        <th scope="col" class="align-middle">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let bet of bets">
+        <tr *ngIf="matchPast(bet.match)" [ngClass]="{'bet-won': isScoreUpdated(bet) && isBetWon(bet), 'bet-lost': isScoreUpdated(bet) && !isBetWon(bet)}">
+          <td class="align-middle">{{bet.match.date | date:'yyyy-MM-dd HH:mm'}}</td>
+          <td class="align-middle">
+            {{bet.match.teamA.name}}
+            <button type="button" class="btn mb-1" style="background-color:transparent; border: 0px" placement="right" popoverTitle="{{bet.match.teamA.name}} Details"
+                    popover="Coach: {{bet.match.teamA.coach}}" triggers="mouseenter:mouseleave">
+              <i class="fa fa-info-circle"></i>
+            </button>
+          </td>
+          <td class="align-middle">
+            {{bet.match.teamB.name}}
+            <button type="button" class="btn mb-1" style="background-color:transparent; border: 0px" placement="right" popoverTitle="{{bet.match.teamB.name}} Details"
+                    popover="Coach: {{bet.match.teamB.coach}}" triggers="mouseenter:mouseleave">
+              <i class="fa fa-info-circle"></i>
+            </button>
+          </td>
+          <td class="align-middle">{{bet.prediction}}</td>
+          <td class="align-middle" *ngIf="isScoreUpdated(bet) && isBetWon(bet)">{{bet.odds-1 | number:'1.0-2'}}</td>
+          <td class="align-middle" *ngIf="!(isScoreUpdated(bet) && isBetWon(bet))">-1</td>
+          <td class="align-middle" *ngIf="!isScoreUpdated(bet)">? - ?</td>
+          <td class="align-middle" *ngIf="isScoreUpdated(bet)">{{bet.match.score.teamAGoals}} - {{bet.match.score.teamBGoals}}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

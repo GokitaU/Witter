@@ -14,7 +14,7 @@
     <tbody>
       <tr *ngFor="let user of users; let i = index" [ngClass]="{'text-warning': isItMe(user)==true}">
         <td class="align-middle">{{i+1}}</td>
-        <td class="align-middle">{{user.username}}</td>
+        <td class="align-middle"><a routerLink="/user/{{user.id}}">{{user.username}}</a></td>
         <td class="align-middle">{{user.score | number:'1.0-2'}}</td>
         <td class="align-middle">
           <span *ngIf="user.ban != null">Banned until {{user.ban | date:'yyyy-MM-dd'}}</span>

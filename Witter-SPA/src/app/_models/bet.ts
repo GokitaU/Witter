@@ -5,5 +5,6 @@ export interface Bet {
   matchId: number,
   prediction: number,
   userId?: number,
-  odds?: number
+  odds?: number,
+  match?: Match
 }

@@ -106,6 +106,7 @@ namespace Witter.Controllers
         }
 
         [HttpGet("users/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await userRepository.GetUser(id);

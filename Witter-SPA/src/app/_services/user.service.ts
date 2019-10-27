@@ -43,4 +43,8 @@ export class UserService {
   unban(id) {
     return this.http.put(this.baseUrl + 'unban/' + id, {});
   }
+
+  updatePass(id: any, user: User) {
+    return this.http.put(environment.apiUrl + 'auth/password/' + id, user);
+  }
 }
