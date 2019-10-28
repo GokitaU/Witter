@@ -26,6 +26,7 @@ namespace Witter.Helpers
             CreateMap<User, UserForAdminDto>();
             CreateMap<LeagueForCreateDto, League>();
             CreateMap<UserForBanDto, User>();
+            CreateMap<League, LeagueForListDto>();
             CreateMap<Bet, BetForClientDto>()
                 .ForMember(dest => dest.Match, opt =>
                     opt.MapFrom(src => matchRepository.GetMatchSync(src.MatchId)));

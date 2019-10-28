@@ -14,12 +14,14 @@ import { AdminUsersFormBanComponent } from './admin/admin-users-form-ban/admin-u
 import { RankingComponent } from './ranking/ranking.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.component';
+import { LeagueListComponent } from './league-list/league-list.component';
 
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'matches', component: MatchesComponent },
   { path: 'ranking', component: RankingComponent },
+  { path: 'leagues', component: LeagueListComponent },
   { path: 'admin/matches', component: AdminMatchesComponent },
   { path: 'admin/matches/add', component: AdminMatchesFormComponent },
   { path: 'admin/matches/update/:id', component: AdminMatchesFormEditComponent },

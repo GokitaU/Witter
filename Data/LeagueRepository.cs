@@ -16,6 +16,11 @@ namespace Witter.Data
             this.dataContext = dataContext;
         }
 
+        public async Task<int> CountUsers(int id)
+        {
+            return await dataContext.UsersInLeagues.Where(x => x.LeagueId == id).CountAsync();
+        }
+
         public async void Create(League league)
         {
             await dataContext.Leagues.AddAsync(league);
@@ -33,12 +38,17 @@ namespace Witter.Data
 
         public IEnumerable<League> GetLeagues()
         {
-            return dataContext.Leagues.Include(l => l.Admin);
+            return dataContext.Leagues.Include(l => l.Admin).OrderBy(l => l.Name);
         }
 
         public IEnumerable<League> GetLeaguesByUser(int id)
         {
-            return dataContext.UsersInLeagues.Where(x => x.UserId == id).Select(x => x.League).Include(l => l.Admin);
+            return dataContext.UsersInLeagues.Where(x => x.UserId == id).Select(x => x.League).Include(l => l.Admin).OrderBy(l => l.Name);
+        }
+
+        public IEnumerable<League> GetLeaguesWithoutUser(int id)
+        {
+            return dataContext.Leagues.Except(GetLeaguesByUser(id)).Include(l => l.Admin).OrderBy(l => l.Name);
         }
 
         public IEnumerable<User> GetUsersByLeague(int id)

@@ -17,5 +17,7 @@ namespace Witter.Data
         IEnumerable<League> GetLeagues();
         IEnumerable<User> GetUsersByLeague(int id);
         IEnumerable<League> GetLeaguesByUser(int id);
+        IEnumerable<League> GetLeaguesWithoutUser(int id);
+        Task<int> CountUsers(int id);
     }
 }

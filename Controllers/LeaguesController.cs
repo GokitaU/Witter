@@ -32,11 +32,20 @@ namespace Witter.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetLeagues()
         {
             var leagues = leagueRepository.GetLeagues();
 
-            return Ok(leagues);
+            var leaguesToReturn = mapper.Map<IEnumerable<LeagueForListDto>>(leagues);
+
+            foreach (var l in leagues.Zip(leaguesToReturn, Tuple.Create))
+            {
+                //temporary solution
+                l.Item2.UserCount = await leagueRepository.CountUsers(l.Item1.Id);
+            }
+
+            return Ok(leaguesToReturn);
         }
 
         [HttpGet("{id}", Name ="GetLeague")]
@@ -60,7 +69,31 @@ namespace Witter.Controllers
         {
             var leagues = leagueRepository.GetLeaguesByUser(userId);
 
-            return Ok(leagues);
+            var leaguesToReturn = mapper.Map<IEnumerable<LeagueForListDto>>(leagues);
+
+            foreach (var l in leagues.Zip(leaguesToReturn, Tuple.Create))
+            {
+                //temporary solution
+                l.Item2.UserCount = await leagueRepository.CountUsers(l.Item1.Id);
+            }
+
+            return Ok(leaguesToReturn);
+        }
+
+        [HttpGet("user/not/{userId}")]
+        public async Task<IActionResult> GetLeaguesWithoutUser(int userId)
+        {
+            var leagues = leagueRepository.GetLeaguesWithoutUser(userId);
+
+            var leaguesToReturn = mapper.Map<IEnumerable<LeagueForListDto>>(leagues);
+
+            foreach (var l in leagues.Zip(leaguesToReturn, Tuple.Create))
+            {
+                //temporary solution
+                l.Item2.UserCount = await leagueRepository.CountUsers(l.Item1.Id);
+            }
+
+            return Ok(leaguesToReturn);
         }
 
         [HttpPost("{id}/join")]

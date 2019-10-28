@@ -27,6 +27,7 @@ import { AdminUsersFormBanComponent } from './admin/admin-users-form-ban/admin-u
 import { RankingComponent } from './ranking/ranking.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.component';
+import { LeagueListComponent } from './league-list/league-list.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -50,7 +51,8 @@ export function tokenGetter() {
     AdminUsersFormBanComponent,
     RankingComponent,
     UserProfileComponent,
-    UserProfileEditComponent
+    UserProfileEditComponent,
+    LeagueListComponent
   ],
   imports: [
     BrowserModule,

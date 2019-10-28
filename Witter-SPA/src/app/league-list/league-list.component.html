@@ -1,0 +1,73 @@
+<h1 class="text-center mb-2">Leagues</h1>
+<hr />
+
+<div class="container" *ngIf="loggedIn()">
+  <h4 class="text-center mb-2">Your Leagues</h4>
+  <table class="table matches text-center">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Name</th>
+        <th scope="col" class="align-middle">Prize</th>
+        <th scope="col" class="align-middle">Admin</th>
+        <th scope="col" class="align-middle">Users</th>
+        <th scope="col" class="align-middle">Position</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let league of leaguesWithUser">
+          <td class="align-middle">{{league.name}}</td>
+          <td class="align-middle">{{league.prize}}</td>
+          <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
+          <td class="align-middle">{{league.userCount}}</td>
+          <td class="align-middle">--</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr />
+<div class="container" *ngIf="loggedIn()">
+  <h4 class="text-center mb-2">Other Leagues</h4>
+  <table class="table matches text-center">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Name</th>
+        <th scope="col" class="align-middle">Prize</th>
+        <th scope="col" class="align-middle">Admin</th>
+        <th scope="col" class="align-middle">Users</th>
+        <th scope="col" class="align-middle">Join</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let league of leaguesWithoutUser">
+          <td class="align-middle">{{league.name}}</td>
+          <td class="align-middle">{{league.prize}}</td>
+          <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
+          <td class="align-middle">{{league.userCount}}</td>
+          <td class="align-middle">--</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr />
+<div class="container" *ngIf="!loggedIn()">
+  <table class="table matches text-center">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Name</th>
+        <th scope="col" class="align-middle">Prize</th>
+        <th scope="col" class="align-middle">Admin</th>
+        <th scope="col" class="align-middle">Users</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let league of leagues">
+          <td class="align-middle">{{league.name}}</td>
+          <td class="align-middle">{{league.prize}}</td>
+          <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
+          <td class="align-middle">{{league.userCount}}</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
