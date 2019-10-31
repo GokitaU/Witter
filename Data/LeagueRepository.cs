@@ -62,6 +62,13 @@ namespace Witter.Data
             return dataContext.Leagues.Except(GetLeaguesByUser(id)).Include(l => l.Admin).OrderBy(l => l.Name);
         }
 
+        public int GetPosition(int userId, int leagueId)
+        {
+            var ranking = GetUsersByLeague(leagueId);
+
+            return ranking.ToList().FindIndex(x => x.Id == userId) + 1;
+        }
+
         public async Task<UserInLeague> GetUserInLeague(int userId, int leagueId)
         {
             return await dataContext.UsersInLeagues.FirstOrDefaultAsync(x => x.LeagueId == leagueId && x.UserId == userId);

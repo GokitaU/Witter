@@ -6,5 +6,6 @@ export interface League {
   prize: string,
   admin: User,
   users?: User[],
-  UserCount?: number
+  UserCount?: number,
+  position?: number
 }

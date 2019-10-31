@@ -13,5 +13,6 @@ namespace Witter.Dtos
         public string Prize { get; set; }
         public UserForReturnDto Admin { get; set; }
         public int UserCount { get; set; }
+        public int Position { get; set; }
     }
 }

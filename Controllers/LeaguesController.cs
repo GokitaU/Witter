@@ -86,6 +86,7 @@ namespace Witter.Controllers
             {
                 //temporary solution
                 l.Item2.UserCount = await leagueRepository.CountUsers(l.Item1.Id);
+                l.Item2.Position = leagueRepository.GetPosition(userId, l.Item1.Id);
             }
 
             leaguesToReturn = leaguesToReturn.OrderByDescending(l => l.UserCount);
