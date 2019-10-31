@@ -29,6 +29,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.component';
 import { LeagueListComponent } from './league-list/league-list.component';
 import { LeagueDetailComponent } from './league-detail/league-detail.component';
+import { LeagueCreateFormComponent } from './league-create-form/league-create-form.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -54,7 +55,8 @@ export function tokenGetter() {
     UserProfileComponent,
     UserProfileEditComponent,
     LeagueListComponent,
-    LeagueDetailComponent
+    LeagueDetailComponent,
+    LeagueCreateFormComponent
   ],
   imports: [
     BrowserModule,

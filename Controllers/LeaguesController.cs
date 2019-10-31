@@ -15,7 +15,7 @@ namespace Witter.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles="User, Admin")]
+    [Authorize(Roles = "User, Admin")]
     public class LeaguesController : ControllerBase
     {
         private readonly DataContext dataContext;
@@ -48,7 +48,7 @@ namespace Witter.Controllers
             return Ok(leaguesToReturn);
         }
 
-        [HttpGet("{id}", Name ="GetLeague")]
+        [HttpGet("{id}", Name = "GetLeague")]
         public async Task<IActionResult> GetLeague(int id)
         {
             var league = await leagueRepository.GetLeague(id);
@@ -71,6 +71,7 @@ namespace Witter.Controllers
         }
 
         [HttpGet("user/{userId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetLeaguesByUser(int userId)
         {
             var leagues = leagueRepository.GetLeaguesByUser(userId);
@@ -82,6 +83,8 @@ namespace Witter.Controllers
                 //temporary solution
                 l.Item2.UserCount = await leagueRepository.CountUsers(l.Item1.Id);
             }
+
+            leaguesToReturn = leaguesToReturn.OrderByDescending(l => l.UserCount);
 
             return Ok(leaguesToReturn);
         }
@@ -99,6 +102,8 @@ namespace Witter.Controllers
                 l.Item2.UserCount = await leagueRepository.CountUsers(l.Item1.Id);
             }
 
+            leaguesToReturn = leaguesToReturn.OrderByDescending(l => l.UserCount);
+
             return Ok(leaguesToReturn);
         }
 
@@ -108,14 +113,14 @@ namespace Witter.Controllers
             int loggedUserId;
             Int32.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out loggedUserId);
 
-            if(await leagueRepository.Member(id, loggedUserId))
+            if (await leagueRepository.Member(id, loggedUserId))
             {
                 return BadRequest("You are already a member of this league.");
             }
 
             var league = await leagueRepository.GetLeague(id);
 
-            if(league == null)
+            if (league == null)
             {
                 return BadRequest("League not found.");
             }
@@ -128,7 +133,7 @@ namespace Witter.Controllers
 
             leagueRepository.Join(userInLeague);
 
-            if(await dataContext.Commit())
+            if (await dataContext.Commit())
             {
                 return Ok();
             }
@@ -136,8 +141,31 @@ namespace Witter.Controllers
             return BadRequest("Something went wrong. Try again later.");
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> AddLeague([FromForm]LeagueForCreateDto league)
+        [HttpPost("{id}/leave")]
+        public async Task<IActionResult> LeaveLeague(int id)
+        {
+            int loggedUserId;
+            Int32.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out loggedUserId);
+
+            var userInLeague = await leagueRepository.GetUserInLeague(loggedUserId, id);
+
+            if(userInLeague == null)
+            {
+                return BadRequest("You are not a member of this league.");
+            }
+
+            leagueRepository.DeleteUserInLeague(userInLeague);
+
+            if(await dataContext.Commit())
+            {
+                return Ok();
+            }
+
+            return BadRequest("Could not leave league");
+        }
+
+    [HttpPost("add")]
+        public async Task<IActionResult> AddLeague(LeagueForCreateDto league)
         {
             if (await leagueRepository.NameExists(league.Name))
             {

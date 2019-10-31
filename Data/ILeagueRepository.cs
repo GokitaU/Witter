@@ -10,6 +10,8 @@ namespace Witter.Data
     {
         void Create(League league);
         void Delete(League league);
+        void DeleteAllUsersInLeague(int leagueId);
+        void DeleteUserInLeague(UserInLeague userInLeague);
         Task<bool> NameExists(string name);
         Task<bool> Member(int leagueId, int userId);
         Task<League> GetLeague(int id);
@@ -19,5 +21,6 @@ namespace Witter.Data
         IEnumerable<League> GetLeaguesByUser(int id);
         IEnumerable<League> GetLeaguesWithoutUser(int id);
         Task<int> CountUsers(int id);
+        Task<UserInLeague> GetUserInLeague(int userId, int leagueId);
     }
 }

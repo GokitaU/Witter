@@ -10,7 +10,6 @@ import { League } from '../_models/league';
   styleUrls: ['./league-list.component.css']
 })
 export class LeagueListComponent implements OnInit {
-  leagues: League[];
   leaguesWithUser: League[];
   leaguesWithoutUser: League[];
 
@@ -19,21 +18,8 @@ export class LeagueListComponent implements OnInit {
   ngOnInit() {
     this.authService.throwOutNotLoggedIn();
 
-    if (this.authService.loggedIn()) {
       this.getLeaguesWithUser();
       this.getLeaguesWithoutUser();
-    }
-    else {
-      this.getLeagues();
-    }
-  }
-
-  getLeagues() {
-    this.leagueService.getLeagues().subscribe((leagues: League[]) => {
-      this.leagues = leagues;
-    }, error => {
-      this.alertify.error(error);
-      });
   }
 
   getLeaguesWithUser() {
@@ -47,7 +33,6 @@ export class LeagueListComponent implements OnInit {
   getLeaguesWithoutUser() {
     this.leagueService.getLeaguesWithoutUser(this.authService.getId()).subscribe((leagues: League[]) => {
       this.leaguesWithoutUser = leagues;
-      console.log(leagues);
     }, error => {
       this.alertify.error(error);
     });
@@ -55,6 +40,37 @@ export class LeagueListComponent implements OnInit {
 
   loggedIn() {
     return this.authService.loggedIn();
+  }
+
+  joinLeague(leagueId) {
+    this.leagueService.joinLeague(leagueId).subscribe(() => {
+      this.alertify.success('Joined league successfully');
+      this.ngOnInit();
+    }, error => {
+      this.alertify.error(error);
+      });
+  }
+
+  leaveLeague(leagueId) {
+    this.leagueService.leaveLeague(leagueId).subscribe(() => {
+      this.alertify.success('Left league successfully');
+      this.ngOnInit();
+    }, error => {
+      this.alertify.error(error);
+      });
+  }
+
+  deleteLeague(leagueId) {
+    this.leagueService.deleteLeague(leagueId).subscribe(() => {
+      this.alertify.success('Deleted league successfully');
+      this.ngOnInit();
+    }, error => {
+      this.alertify.error(error);
+      });
+  }
+
+  amIAdmin(league: League) {
+    return this.authService.getId() == league.admin.id.toString();
   }
 
 }

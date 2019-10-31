@@ -32,4 +32,20 @@ export class LeagueService {
   getRanking(id): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + id + '/rank');
   }
+
+  addLeague(league: League) {
+    return this.http.post(this.baseUrl + 'add', league);
+  }
+
+  joinLeague(id) {
+    return this.http.post(this.baseUrl + id + '/join', {});
+  }
+
+  leaveLeague(id) {
+    return this.http.post(this.baseUrl + id + '/leave', {});
+  }
+
+  deleteLeague(id) {
+    return this.http.post(this.baseUrl + id + '/delete', {});
+  }
 }

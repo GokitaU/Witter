@@ -28,7 +28,18 @@ namespace Witter.Data
 
         public void Delete(League league)
         {
+            DeleteAllUsersInLeague(league.Id);
             dataContext.Leagues.Remove(league);
+        }
+
+        public void DeleteAllUsersInLeague(int leagueId)
+        {
+            dataContext.UsersInLeagues.RemoveRange(dataContext.UsersInLeagues.Where(x => x.LeagueId == leagueId));
+        }
+
+        public void DeleteUserInLeague(UserInLeague userInLeague)
+        {
+            dataContext.UsersInLeagues.Remove(userInLeague);
         }
 
         public async Task<League> GetLeague(int id)
@@ -51,9 +62,14 @@ namespace Witter.Data
             return dataContext.Leagues.Except(GetLeaguesByUser(id)).Include(l => l.Admin).OrderBy(l => l.Name);
         }
 
+        public async Task<UserInLeague> GetUserInLeague(int userId, int leagueId)
+        {
+            return await dataContext.UsersInLeagues.FirstOrDefaultAsync(x => x.LeagueId == leagueId && x.UserId == userId);
+        }
+
         public IEnumerable<User> GetUsersByLeague(int id)
         {
-            return dataContext.UsersInLeagues.Where(x => x.LeagueId == id).Select(x => x.User).OrderBy(y => y.Score);
+            return dataContext.UsersInLeagues.Where(x => x.LeagueId == id).Select(x => x.User).OrderByDescending(y => y.Score);
         }
 
         public async void Join(UserInLeague userInLeague)

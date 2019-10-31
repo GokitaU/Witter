@@ -91,3 +91,29 @@
     </tbody>
   </table>
 </div>
+
+<hr />
+
+<div class="container">
+  <h4 class="text-center mb-2">Leagues</h4>
+  <table class="table matches text-center">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Name</th>
+        <th scope="col" class="align-middle">Prize</th>
+        <th scope="col" class="align-middle">Admin</th>
+        <th scope="col" class="align-middle">Users</th>
+        <th scope="col" class="align-middle">Position</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let league of leaguesWithUser">
+        <td class="align-middle"><a routerLink="/league/{{league.id}}">{{league.name}}</a></td>
+        <td class="align-middle">{{league.prize}}</td>
+        <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
+        <td class="align-middle">{{league.userCount}}</td>
+        <td class="align-middle">--</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

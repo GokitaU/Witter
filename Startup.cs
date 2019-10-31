@@ -43,7 +43,9 @@ namespace Witter
             services.AddScoped<IBetRepository, BetRepository>();
             services.AddScoped<ILeagueRepository, LeagueRepository>();
             services.AddAutoMapper(typeof(AuthRepository).Assembly);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(opt => {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddCors();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

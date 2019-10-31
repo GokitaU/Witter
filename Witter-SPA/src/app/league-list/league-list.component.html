@@ -1,4 +1,7 @@
 <h1 class="text-center mb-2">Leagues</h1>
+<div class="container mt-2 text-center">
+  <a class="btn btn-info text-white my-2 ml-1 my-sm-0" [routerLink]="['/league/create']">Create league</a>
+</div>
 <hr />
 
 <div class="container" *ngIf="loggedIn()">
@@ -11,16 +14,21 @@
         <th scope="col" class="align-middle">Admin</th>
         <th scope="col" class="align-middle">Users</th>
         <th scope="col" class="align-middle">Position</th>
+        <th scope="col" class="align-middle">Actions</th>
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let league of leaguesWithUser">
-          <td class="align-middle"><a routerLink="/league/{{league.id}}">{{league.name}}</a></td>
-          <td class="align-middle">{{league.prize}}</td>
-          <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
-          <td class="align-middle">{{league.userCount}}</td>
-          <td class="align-middle">--</td>
-        </tr>
+      <tr *ngFor="let league of leaguesWithUser">
+        <td class="align-middle"><a routerLink="/league/{{league.id}}">{{league.name}}</a></td>
+        <td class="align-middle">{{league.prize}}</td>
+        <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
+        <td class="align-middle">{{league.userCount}}</td>
+        <td class="align-middle">--</td>
+        <td class="align-middle">
+          <button type="button" (click)="leaveLeague(league.id)" *ngIf="!amIAdmin(league)" class="btn btn-danger ml-2 small-button"><i class="fa fa-sign-in-alt"></i></button>
+          <button type="button" (click)="deleteLeague(league.id)" *ngIf="amIAdmin(league)" class="btn btn-danger ml-2 small-button"><i class="fa fa-trash"></i></button>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -44,29 +52,9 @@
           <td class="align-middle">{{league.prize}}</td>
           <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
           <td class="align-middle">{{league.userCount}}</td>
-          <td class="align-middle">--</td>
-        </tr>
-    </tbody>
-  </table>
-</div>
-
-<hr />
-<div class="container" *ngIf="!loggedIn()">
-  <table class="table matches text-center">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col" class="align-middle">Name</th>
-        <th scope="col" class="align-middle">Prize</th>
-        <th scope="col" class="align-middle">Admin</th>
-        <th scope="col" class="align-middle">Users</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let league of leagues">
-          <td class="align-middle"><a routerLink="/league/{{league.id}}">{{league.name}}</a></td>
-          <td class="align-middle">{{league.prize}}</td>
-          <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
-          <td class="align-middle">{{league.userCount}}</td>
+          <td class="align-middle">
+            <button type="button" (click)="joinLeague(league.id)" class="btn btn-success ml-2 small-button"><i class="fa fa-sign-in-alt"></i></button>
+          </td>
         </tr>
     </tbody>
   </table>

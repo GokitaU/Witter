@@ -7,6 +7,8 @@ import { Bet } from '../_models/bet';
 import { BetService } from '../_services/bet.service';
 import { Match } from '../_models/match';
 import { AuthService } from '../_services/auth.service';
+import { League } from '../_models/league';
+import { LeagueService } from '../_services/league.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,12 +18,14 @@ import { AuthService } from '../_services/auth.service';
 export class UserProfileComponent implements OnInit {
   user: User;
   bets: Bet[];
+  leaguesWithUser: League[];
 
-  constructor(private userService: UserService, private alertify: AlertifyService, private route: ActivatedRoute, private betService: BetService, private authService: AuthService) { }
+  constructor(private userService: UserService, private alertify: AlertifyService, private route: ActivatedRoute, private leagueService: LeagueService, private betService: BetService, private authService: AuthService) { }
 
   ngOnInit() {
     this.getUser();
     this.getBets();
+    this.getLeaguesWithUser();
   }
 
   getUser() {
@@ -39,6 +43,14 @@ export class UserProfileComponent implements OnInit {
   getBets() {
     this.betService.getBetsByUser(this.route.snapshot.paramMap.get("id")).subscribe((bets: Bet[]) => {
       this.bets = bets;
+    }, error => {
+      this.alertify.error(error);
+    });
+  }
+
+  getLeaguesWithUser() {
+    this.leagueService.getLeaguesByUser(this.route.snapshot.paramMap.get("id")).subscribe((leagues: League[]) => {
+      this.leaguesWithUser = leagues;
     }, error => {
       this.alertify.error(error);
     });
