@@ -17,6 +17,8 @@ export class LeagueListComponent implements OnInit {
   constructor(private authService: AuthService, private leagueService: LeagueService, private alertify: AlertifyService) { }
 
   ngOnInit() {
+    this.authService.throwOutNotLoggedIn();
+
     if (this.authService.loggedIn()) {
       this.getLeaguesWithUser();
       this.getLeaguesWithoutUser();

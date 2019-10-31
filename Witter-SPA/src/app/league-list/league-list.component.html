@@ -15,7 +15,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let league of leaguesWithUser">
-          <td class="align-middle">{{league.name}}</td>
+          <td class="align-middle"><a routerLink="/league/{{league.id}}">{{league.name}}</a></td>
           <td class="align-middle">{{league.prize}}</td>
           <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
           <td class="align-middle">{{league.userCount}}</td>
@@ -40,7 +40,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let league of leaguesWithoutUser">
-          <td class="align-middle">{{league.name}}</td>
+          <td class="align-middle"><a routerLink="/league/{{league.id}}">{{league.name}}</a></td>
           <td class="align-middle">{{league.prize}}</td>
           <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
           <td class="align-middle">{{league.userCount}}</td>
@@ -63,7 +63,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let league of leagues">
-          <td class="align-middle">{{league.name}}</td>
+          <td class="align-middle"><a routerLink="/league/{{league.id}}">{{league.name}}</a></td>
           <td class="align-middle">{{league.prize}}</td>
           <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
           <td class="align-middle">{{league.userCount}}</td>

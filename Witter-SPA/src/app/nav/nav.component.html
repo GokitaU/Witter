@@ -8,7 +8,7 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/ranking']">Ranking</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
+      <li class="nav-item" routerLinkActive="active" *ngIf="loggedIn()">
         <a class="nav-link" [routerLink]="['/leagues']">Leagues</a>
       </li>
       <li *ngIf="isAdmin()" class="nav-item dropdown" routerLinkActive="active" dropdown>

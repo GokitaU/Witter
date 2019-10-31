@@ -1,0 +1,30 @@
+<h1 class="text-center mb-2">League: {{ league.name }}</h1>
+<h1 class="text-center mb-2">Prize: {{ league.prize }}</h1>
+<h1 class="text-center mb-2">Admin: {{ league.admin.username }}</h1>
+<h1 class="text-center mb-2">Users: {{ league.userCount }}</h1>
+<hr />
+
+<div class="container mt-2 text-center">
+  <h4 *ngIf="loggedIn()">Your position: </h4>
+  <table class="table matches">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="align-middle">Place</th>
+        <th scope="col" class="align-middle">Username</th>
+        <th scope="col" class="align-middle">Points</th>
+        <th scope="col" class="align-middle">Info</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of ranking; let i = index" [ngClass]="{'text-warning': isItMe(user)==true}">
+        <td class="align-middle">{{i+1}}</td>
+        <td class="align-middle"><a routerLink="/user/{{user.id}}">{{user.username}}</a></td>
+        <td class="align-middle">{{user.score | number:'1.0-2'}}</td>
+        <td class="align-middle">
+          <span *ngIf="user.ban != null">Banned until {{user.ban | date:'yyyy-MM-dd'}}</span>
+          <span *ngIf="user.isAdmin">Administrator</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

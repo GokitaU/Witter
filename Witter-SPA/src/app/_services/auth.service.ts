@@ -67,4 +67,11 @@ export class AuthService {
       this.router.navigate(['/matches']);
     }
   }
+
+  throwOutNotLoggedIn() {
+    if (!this.loggedIn()) {
+      this.alertify.error('You are not allowed to access this page!');
+      this.router.navigate(['/matches']);
+    }
+  }
 }

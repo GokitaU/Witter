@@ -28,6 +28,7 @@ import { RankingComponent } from './ranking/ranking.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.component';
 import { LeagueListComponent } from './league-list/league-list.component';
+import { LeagueDetailComponent } from './league-detail/league-detail.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -52,7 +53,8 @@ export function tokenGetter() {
     RankingComponent,
     UserProfileComponent,
     UserProfileEditComponent,
-    LeagueListComponent
+    LeagueListComponent,
+    LeagueDetailComponent
   ],
   imports: [
     BrowserModule,

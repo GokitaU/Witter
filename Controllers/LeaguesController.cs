@@ -53,7 +53,11 @@ namespace Witter.Controllers
         {
             var league = await leagueRepository.GetLeague(id);
 
-            return Ok(league);
+
+            var leagueToReturn = mapper.Map<LeagueForListDto>(league);
+            leagueToReturn.UserCount = await leagueRepository.CountUsers(league.Id);
+
+            return Ok(leagueToReturn);
         }
 
         [HttpGet("{id}/rank")]
@@ -61,7 +65,9 @@ namespace Witter.Controllers
         {
             var users = leagueRepository.GetUsersByLeague(id);
 
-            return Ok(users);
+            var usersToReturn = mapper.Map<IEnumerable<UserForReturnDto>>(users);
+
+            return Ok(usersToReturn);
         }
 
         [HttpGet("user/{userId}")]

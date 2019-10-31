@@ -15,6 +15,7 @@ import { RankingComponent } from './ranking/ranking.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.component';
 import { LeagueListComponent } from './league-list/league-list.component';
+import { LeagueDetailComponent } from './league-detail/league-detail.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'matches', component: MatchesComponent },
   { path: 'ranking', component: RankingComponent },
   { path: 'leagues', component: LeagueListComponent },
+  { path: 'league/:id', component: LeagueDetailComponent },
   { path: 'admin/matches', component: AdminMatchesComponent },
   { path: 'admin/matches/add', component: AdminMatchesFormComponent },
   { path: 'admin/matches/update/:id', component: AdminMatchesFormEditComponent },
