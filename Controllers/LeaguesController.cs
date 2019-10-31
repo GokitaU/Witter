@@ -53,6 +53,10 @@ namespace Witter.Controllers
         {
             var league = await leagueRepository.GetLeague(id);
 
+            if(league == null)
+            {
+                return NotFound();
+            }
 
             var leagueToReturn = mapper.Map<LeagueForListDto>(league);
             leagueToReturn.UserCount = await leagueRepository.CountUsers(league.Id);

@@ -111,6 +111,11 @@ namespace Witter.Controllers
         {
             var user = await userRepository.GetUser(id);
 
+            if(user == null)
+            {
+                return NotFound();
+            }
+
             var userToReturn = mapper.Map<UserForAdminDto>(user);
 
             return Ok(userToReturn);

@@ -72,6 +72,11 @@ namespace Witter.Controllers
         {
             var match = await matchRepository.GetMatch(id);
 
+            if(match == null)
+            {
+                return NotFound();
+            }
+
             return Ok(match);
         }
 
