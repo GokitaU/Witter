@@ -23,5 +23,6 @@ namespace Witter.Data
         Task<int> CountUsers(int id);
         int GetPosition(int userId, int leagueId);
         Task<UserInLeague> GetUserInLeague(int userId, int leagueId);
+        Task<int> CountUserLeagues(int userId);
     }
 }

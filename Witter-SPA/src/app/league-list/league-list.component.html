@@ -25,7 +25,7 @@
         <td class="align-middle">{{league.userCount}}</td>
         <td class="align-middle">{{league.position}}</td>
         <td class="align-middle">
-          <button type="button" (click)="leaveLeague(league.id)" *ngIf="!amIAdmin(league)" class="btn btn-danger ml-2 small-button"><i class="fa fa-sign-in-alt"></i></button>
+          <button type="button" (click)="leaveLeague(league.id)" *ngIf="!amIAdmin(league)" class="btn btn-danger ml-2 small-button"><i class="fa fa-sign-out"></i></button>
           <button type="button" (click)="deleteLeague(league.id)" *ngIf="amIAdmin(league)" class="btn btn-danger ml-2 small-button"><i class="fa fa-trash"></i></button>
         </td>
       </tr>
@@ -53,7 +53,7 @@
           <td class="align-middle"><a routerLink="/user/{{league.admin.id}}">{{league.admin.username}}</a></td>
           <td class="align-middle">{{league.userCount}}</td>
           <td class="align-middle">
-            <button type="button" (click)="joinLeague(league.id)" class="btn btn-success ml-2 small-button"><i class="fa fa-sign-in-alt"></i></button>
+            <button type="button" (click)="joinLeague(league.id)" class="btn btn-success ml-2 small-button"><i class="fa fa-sign-in"></i></button>
           </td>
         </tr>
     </tbody>

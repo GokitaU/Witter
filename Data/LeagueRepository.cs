@@ -16,6 +16,11 @@ namespace Witter.Data
             this.dataContext = dataContext;
         }
 
+        public Task<int> CountUserLeagues(int userId)
+        {
+            return dataContext.UsersInLeagues.Where(x => x.UserId == userId).CountAsync();
+        }
+
         public async Task<int> CountUsers(int id)
         {
             return await dataContext.UsersInLeagues.Where(x => x.LeagueId == id).CountAsync();

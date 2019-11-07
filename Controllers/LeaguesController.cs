@@ -118,6 +118,11 @@ namespace Witter.Controllers
             int loggedUserId;
             Int32.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out loggedUserId);
 
+            if(await leagueRepository.CountUserLeagues(loggedUserId) >= 5)
+            {
+                return BadRequest("You cannot be a member of more than 5 leagues.");
+            }
+
             if (await leagueRepository.Member(id, loggedUserId))
             {
                 return BadRequest("You are already a member of this league.");
@@ -179,6 +184,11 @@ namespace Witter.Controllers
 
             int loggedUserId;
             Int32.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out loggedUserId);
+
+            if (await leagueRepository.CountUserLeagues(loggedUserId) >= 5)
+            {
+                return BadRequest("You cannot be a member of more than 5 leagues.");
+            }
 
             var leagueToCreate = mapper.Map<League>(league);
             leagueToCreate.Admin = await userRepository.GetUser(loggedUserId);
