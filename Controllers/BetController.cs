@@ -104,17 +104,18 @@ namespace Witter.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetBetsByUser(int userId)
         {
-            var bets = betRepository.GetBetsByUser(userId);
+            var bets = await betRepository.GetBetsByUser(userId);
 
-            var betsToReturn = mapper.Map<IEnumerable<BetForClientDto>>(bets);
+            return Ok(bets);
+        }
 
-            foreach (var b in bets.Zip(betsToReturn, Tuple.Create))
-            {
-                //temporary solution
-                b.Item2.Match = await matchRepository.GetMatch(b.Item1.MatchId);
-            }
+        [HttpGet("user/{userId}/past")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPastBetsByUser(int userId)
+        {
+            var bets = await betRepository.GetPastBetsByUser(userId);
 
-            return Ok(betsToReturn);
+            return Ok(bets);
         }
 
         [HttpGet("user/match/{matchId}")]

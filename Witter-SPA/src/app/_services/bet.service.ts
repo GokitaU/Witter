@@ -24,4 +24,8 @@ export class BetService {
   getBetsByUser(userId): Observable<Bet[]> {
     return this.http.get<Bet[]>(this.baseUrl + 'user/' + userId);
   }
+
+  getPastBetsByUser(userId): Observable<Bet[]> {
+    return this.http.get<Bet[]>(this.baseUrl + 'user/' + userId + '/past');
+  }
 }

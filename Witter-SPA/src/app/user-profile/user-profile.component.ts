@@ -24,8 +24,14 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getUser();
-    this.getBets();
     this.getLeaguesWithUser();
+
+    if (this.isItMe()) {
+      this.getBets();
+    }
+    else {
+      this.getPastBets();
+    }
   }
 
   getUser() {
@@ -42,6 +48,14 @@ export class UserProfileComponent implements OnInit {
 
   getBets() {
     this.betService.getBetsByUser(this.route.snapshot.paramMap.get("id")).subscribe((bets: Bet[]) => {
+      this.bets = bets;
+    }, error => {
+      this.alertify.error(error);
+    });
+  }
+
+  getPastBets() {
+    this.betService.getPastBetsByUser(this.route.snapshot.paramMap.get("id")).subscribe((bets: Bet[]) => {
       this.bets = bets;
     }, error => {
       this.alertify.error(error);
