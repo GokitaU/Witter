@@ -11,13 +11,6 @@ namespace Witter.Helpers
 {
     public class AutoMapperProfiles : Profile
     {
-        private readonly IMatchRepository matchRepository;
-
-        public AutoMapperProfiles(IMatchRepository matchRepository)
-        {
-            this.matchRepository = matchRepository;
-        }
-
         public AutoMapperProfiles()
         {
             CreateMap<UserForRegisterDto, User>();
@@ -27,9 +20,6 @@ namespace Witter.Helpers
             CreateMap<LeagueForCreateDto, League>();
             CreateMap<UserForBanDto, User>();
             CreateMap<League, LeagueForListDto>();
-            CreateMap<Bet, BetForClientDto>()
-                .ForMember(dest => dest.Match, opt =>
-                    opt.MapFrom(src => matchRepository.GetMatchSync(src.MatchId)));
         }
     }
 }

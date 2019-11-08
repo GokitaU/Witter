@@ -3,26 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Witter.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Bets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    MatchId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    Prediction = table.Column<int>(nullable: false),
-                    Odds = table.Column<float>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bets", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
@@ -109,6 +93,28 @@ namespace Witter.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Bets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MatchId = table.Column<int>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    Prediction = table.Column<int>(nullable: false),
+                    Odds = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bets_Matches_MatchId",
+                        column: x => x.MatchId,
+                        principalTable: "Matches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Scores",
                 columns: table => new
                 {
@@ -150,6 +156,11 @@ namespace Witter.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bets_MatchId",
+                table: "Bets",
+                column: "MatchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Leagues_AdminId",

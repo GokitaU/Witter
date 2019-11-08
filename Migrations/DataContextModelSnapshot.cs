@@ -21,7 +21,7 @@ namespace Witter.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("MatchId");
+                    b.Property<int?>("MatchId");
 
                     b.Property<float>("Odds");
 
@@ -30,6 +30,8 @@ namespace Witter.Migrations
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MatchId");
 
                     b.ToTable("Bets");
                 });
@@ -142,6 +144,13 @@ namespace Witter.Migrations
                     b.HasIndex("LeagueId");
 
                     b.ToTable("UsersInLeagues");
+                });
+
+            modelBuilder.Entity("Witter.Models.Bet", b =>
+                {
+                    b.HasOne("Witter.Models.Match", "Match")
+                        .WithMany("Bets")
+                        .HasForeignKey("MatchId");
                 });
 
             modelBuilder.Entity("Witter.Models.League", b =>

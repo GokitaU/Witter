@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Witter.Data;
 using Witter.Dtos;
+using Witter.Helpers;
 using Witter.Models;
 
 namespace Witter.Controllers
@@ -71,7 +72,7 @@ namespace Witter.Controllers
 
             var bet = new Bet
             {
-                MatchId = match.Id,
+                Match = match,
                 Prediction = betForPlace.Prediction,
                 UserId = userId,
                 Odds = odds
@@ -102,18 +103,20 @@ namespace Witter.Controllers
 
         [HttpGet("user/{userId}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetBetsByUser(int userId)
+        public async Task<IActionResult> GetBetsByUser(int userId, [FromQuery]BetParams betParams)
         {
-            var bets = await betRepository.GetBetsByUser(userId);
+            var bets = await betRepository.GetBetsByUser(userId, betParams);
+            Response.AddPagination(bets.CurrentPage, bets.PageSize, bets.TotalCount, bets.TotalPages);
 
             return Ok(bets);
         }
 
         [HttpGet("user/{userId}/past")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetPastBetsByUser(int userId)
+        public async Task<IActionResult> GetPastBetsByUser(int userId, [FromQuery]BetParams betParams)
         {
-            var bets = await betRepository.GetPastBetsByUser(userId);
+            var bets = await betRepository.GetPastBetsByUser(userId, betParams);
+            Response.AddPagination(bets.CurrentPage, bets.PageSize, bets.TotalCount, bets.TotalPages);
 
             return Ok(bets);
         }

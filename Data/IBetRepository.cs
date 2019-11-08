@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Witter.Dtos;
+using Witter.Helpers;
 using Witter.Models;
 
 namespace Witter.Data
@@ -12,8 +13,8 @@ namespace Witter.Data
         void Place(Bet bet);
         Task<Bet> GetBet(int BetId);
         Task<bool> BetPlaced(int userId, int matchId);
-        Task<IEnumerable<BetForClientDto>> GetBetsByUser(int userId);
-        Task<IEnumerable<BetForClientDto>> GetPastBetsByUser(int userId);
+        Task<PagedList<Bet>> GetBetsByUser(int userId, BetParams betParams);
+        Task<PagedList<Bet>> GetPastBetsByUser(int userId, BetParams betParams);
         IEnumerable<Bet> GetBetsByMatch(int matchId);
         Task<Bet> GetBetsByUserAndMatch(int userId, int matchId);
     }

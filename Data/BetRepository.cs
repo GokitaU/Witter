@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Witter.Dtos;
+using Witter.Helpers;
 using Witter.Models;
 
 namespace Witter.Data
@@ -24,7 +25,7 @@ namespace Witter.Data
 
         public async Task<bool> BetPlaced(int userId, int matchId)
         {
-            return await dataContext.Bets.AnyAsync(b => (b.UserId == userId) && (b.MatchId == matchId));
+            return await dataContext.Bets.AnyAsync(b => (b.UserId == userId) && (b.Match.Id == matchId));
         }
 
         public async Task<Bet> GetBet(int BetId)
@@ -34,45 +35,25 @@ namespace Witter.Data
 
         public IEnumerable<Bet> GetBetsByMatch(int matchId)
         {
-            return dataContext.Bets.Where(b => b.MatchId == matchId);
-        }
-
-        public async Task<IEnumerable<BetForClientDto>> GetBetsByUser(int userId)
-        {
-            var bets = dataContext.Bets.Where(b => b.UserId == userId).OrderByDescending(b => b.Id);
-
-            var betsToReturn = mapper.Map<IEnumerable<BetForClientDto>>(bets);
-
-            foreach (var b in bets.Zip(betsToReturn, Tuple.Create))
-            {
-                //temporary solution
-                b.Item2.Match = await matchRepository.GetMatch(b.Item1.MatchId);
-            }
-
-            betsToReturn = betsToReturn.OrderByDescending(b => b.Match.Date);
-
-            return betsToReturn;
+            return dataContext.Bets.Where(b => b.Match.Id == matchId);
         }
 
         public async Task<Bet> GetBetsByUserAndMatch(int userId, int matchId)
         {
-            return await dataContext.Bets.FirstOrDefaultAsync(b => (b.UserId == userId && b.MatchId == matchId));
+            return await dataContext.Bets.FirstOrDefaultAsync(b => (b.UserId == userId && b.Match.Id == matchId));
         }
 
-        public async Task<IEnumerable<BetForClientDto>> GetPastBetsByUser(int userId)
+        public async Task<PagedList<Bet>> GetBetsByUser(int userId, BetParams betParams)
         {
-            var bets = dataContext.Bets.Where(b => b.UserId == userId).OrderByDescending(b => b.Id);
+            var bets = dataContext.Bets.Include(b => b.Match).Where(b => b.UserId == userId).OrderByDescending(b => b.Match.Date);
 
-            var betsToReturn = mapper.Map<IEnumerable<BetForClientDto>>(bets);
+            return await PagedList<Bet>.CreateAsync(bets, betParams.PageNumber, betParams.PageSize);
+        }
 
-            foreach (var b in bets.Zip(betsToReturn, Tuple.Create))
-            {
-                //temporary solution
-                b.Item2.Match = await matchRepository.GetMatch(b.Item1.MatchId);
-            }
-
-            betsToReturn = betsToReturn.Where(b => b.Match.Date < DateTime.Now).OrderByDescending(b => b.Match.Date);
-            return betsToReturn;
+        public async Task<PagedList<Bet>> GetPastBetsByUser(int userId, BetParams betParams)
+        {
+            var bets = dataContext.Bets.Include(b => b.Match).Where(b => b.UserId == userId && b.Match.Date < DateTime.Now).OrderByDescending(b => b.Id);
+            return await PagedList<Bet>.CreateAsync(bets, betParams.PageNumber, betParams.PageSize);
         }
 
         public async void Place(Bet bet)

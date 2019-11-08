@@ -16,13 +16,21 @@ namespace Witter.Helpers
         public PagedList(List<T> items, int totalCount, int currentPage, int pageSize)
         {
             TotalCount = totalCount;
-            PageSize = PageSize;
+            PageSize = pageSize;
             CurrentPage = currentPage;
-            TotalPages = (int)Math.Ceiling(Count / (double)pageSize);
+            TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
             this.AddRange(items);
         }
 
         public static async Task<PagedList<T>> CreateAsync(IQueryable<T> source, int currentPage, int pageSize)
+        {
+            var count = await source.CountAsync();
+            var items = await source.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            return new PagedList<T>(items, count, currentPage, pageSize);
+        }
+
+        public static async Task<PagedList<T>> CreateAsync(IOrderedQueryable<T> source, int currentPage, int pageSize)
         {
             var count = await source.CountAsync();
             var items = await source.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();

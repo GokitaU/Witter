@@ -9,8 +9,8 @@ using Witter.Data;
 namespace Witter.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191014101958_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20191108105939_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace Witter.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("MatchId");
+                    b.Property<int?>("MatchId");
 
                     b.Property<float>("Odds");
 
@@ -32,6 +32,8 @@ namespace Witter.Migrations
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MatchId");
 
                     b.ToTable("Bets");
                 });
@@ -144,6 +146,13 @@ namespace Witter.Migrations
                     b.HasIndex("LeagueId");
 
                     b.ToTable("UsersInLeagues");
+                });
+
+            modelBuilder.Entity("Witter.Models.Bet", b =>
+                {
+                    b.HasOne("Witter.Models.Match", "Match")
+                        .WithMany("Bets")
+                        .HasForeignKey("MatchId");
                 });
 
             modelBuilder.Entity("Witter.Models.League", b =>
