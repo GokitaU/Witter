@@ -9,6 +9,7 @@ import { Match } from '../_models/match';
 import { AuthService } from '../_services/auth.service';
 import { League } from '../_models/league';
 import { LeagueService } from '../_services/league.service';
+import { PaginatedResult, Pagination } from '../_models/pagination';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,19 +20,20 @@ export class UserProfileComponent implements OnInit {
   user: User;
   bets: Bet[];
   leaguesWithUser: League[];
+  pagination: Pagination;
 
   constructor(private userService: UserService, private alertify: AlertifyService, private route: ActivatedRoute, private leagueService: LeagueService, private betService: BetService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.getUser();
-    this.getLeaguesWithUser();
-
     if (this.isItMe()) {
-      this.getBets();
+      this.getBets(1);
     }
     else {
-      this.getPastBets();
+      this.getPastBets(1);
     }
+
+    this.getUser();
+    this.getLeaguesWithUser();
   }
 
   getUser() {
@@ -46,17 +48,19 @@ export class UserProfileComponent implements OnInit {
     return this.route.snapshot.paramMap.get("id") == this.authService.getId();
   }
 
-  getBets() {
-    this.betService.getBetsByUser(this.route.snapshot.paramMap.get("id")).subscribe((bets: Bet[]) => {
-      this.bets = bets;
+  getBets(page) {
+    this.betService.getBetsByUser(this.route.snapshot.paramMap.get("id"), page).subscribe((bets: PaginatedResult<Bet[]>) => {
+      this.bets = bets.result;
+      this.pagination = bets.pagination;
     }, error => {
       this.alertify.error(error);
     });
   }
 
-  getPastBets() {
-    this.betService.getPastBetsByUser(this.route.snapshot.paramMap.get("id")).subscribe((bets: Bet[]) => {
-      this.bets = bets;
+  getPastBets(page) {
+    this.betService.getPastBetsByUser(this.route.snapshot.paramMap.get("id"), page).subscribe((bets: PaginatedResult<Bet[]>) => {
+      this.bets = bets.result;
+      this.pagination = bets.pagination;
     }, error => {
       this.alertify.error(error);
     });
@@ -96,6 +100,18 @@ export class UserProfileComponent implements OnInit {
     }
 
     return false;
+  }
+
+  pageChanged(event: any): void {
+    console.log(event.page);
+    this.pagination.currentPage = event.page;
+
+    if (this.isItMe()) {
+      this.getBets(this.pagination.currentPage);
+    }
+    else {
+      this.getPastBets(this.pagination.currentPage);
+    }
   }
 
 }

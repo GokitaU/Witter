@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Witter.Models;
 
 namespace Witter.Helpers
 {
@@ -36,6 +37,11 @@ namespace Witter.Helpers
             var items = await source.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
 
             return new PagedList<T>(items, count, currentPage, pageSize);
+        }
+
+        internal static Task<PagedList<User>> CreateAsync(IOrderedQueryable<User> users, object pageNumber, object pageSize)
+        {
+            throw new NotImplementedException();
         }
     }
 }

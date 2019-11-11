@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Witter-SPA\src\app\_models\league.ts" />
+    <None Remove="Witter-SPA\src\app\_models\pagination.ts" />
     <None Remove="Witter-SPA\src\app\_services\error.interceptor.ts" />
   </ItemGroup>
 
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="Witter-SPA\src\app\_models\pagination.ts" />
     <TypeScriptCompile Include="Witter-SPA\src\app\_models\league.ts" />
     <TypeScriptCompile Include="Witter-SPA\src\app\_services\error.interceptor.ts" />
   </ItemGroup>

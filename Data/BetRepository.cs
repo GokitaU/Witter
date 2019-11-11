@@ -45,14 +45,14 @@ namespace Witter.Data
 
         public async Task<PagedList<Bet>> GetBetsByUser(int userId, BetParams betParams)
         {
-            var bets = dataContext.Bets.Include(b => b.Match).Where(b => b.UserId == userId).OrderByDescending(b => b.Match.Date);
+            var bets = dataContext.Bets.Include(b => b.Match).Include(b => b.Match.TeamA).Include(b => b.Match.TeamB).Where(b => b.UserId == userId).OrderByDescending(b => b.Match.Date);
 
             return await PagedList<Bet>.CreateAsync(bets, betParams.PageNumber, betParams.PageSize);
         }
 
         public async Task<PagedList<Bet>> GetPastBetsByUser(int userId, BetParams betParams)
         {
-            var bets = dataContext.Bets.Include(b => b.Match).Where(b => b.UserId == userId && b.Match.Date < DateTime.Now).OrderByDescending(b => b.Id);
+            var bets = dataContext.Bets.Include(b => b.Match).Include(b => b.Match.TeamA).Include(b => b.Match.TeamB).Where(b => b.UserId == userId && b.Match.Date < DateTime.Now).OrderByDescending(b => b.Id);
             return await PagedList<Bet>.CreateAsync(bets, betParams.PageNumber, betParams.PageSize);
         }
 
